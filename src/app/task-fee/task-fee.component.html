@@ -1,0 +1,108 @@
+<p style="background: #84b4f1;color: black;">Task Fee</p>
+<form [formGroup]="form" class="form-container">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="serviceID">Service ID</label>
+            <input formControlName="service_ID" type="text" class="form-control" id="serviceID" placeholder="Service ID">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<p-table [value]="taskfee" [paginator]="true" [rows]="5">
+    
+    <ng-template pTemplate="header" >
+        <tr>
+            <th >
+                Service ID 
+              </th>
+              <th >
+                Task ID
+              </th>
+              <th >
+                Task Name
+              </th>
+              <th >
+                Customer Type
+              </th>
+              <th >
+                Fee
+              </th>
+            <th >
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter35">
+                ADD New
+              </button>
+           </th>
+        </tr>
+        
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData >
+        <tr [pSelectableRow]="rowData">
+            <td >
+                {{rowData.service_ID}}
+             </td>
+             <td >
+               {{rowData.task_ID}}
+             </td>
+             <td >
+               {{rowData.task_Name}}
+             </td>
+             <td >
+               {{rowData.property_Type}}
+             </td>
+             <td >
+               {{rowData.fee}}
+             </td>
+            <td>
+                <form [formGroup]="form" >
+                    <div class="modal fade" id="exampleModalCenter35" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle2">List of users</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                  <label for="recipient-name" class="col-form-label">Service ID	</label>
+                                  <input type="text" class="form-control" placeholder="Service ID	" formControlName="service_ID" id="recipient-name">
+                                </div>
+                                <div class="mb-3">
+                                  <label for="recipient-name" class="col-form-label">Task ID</label>
+                                  <input type="text" class="form-control" placeholder="Task ID" formControlName="task_ID" id="recipient-name">
+                                </div>
+                                <div class="mb-3">
+                                  <label for="recipient-name" class="col-form-label">Customer Type</label>
+                                  <input type="text" class="form-control" placeholder="Customer Type" formControlName="property_Type" id="recipient-name">
+                                </div>
+                                <div class="mb-3">
+                                  <label for="recipient-name" class="col-form-label">Fee</label>
+                                  <input type="text" class="form-control" placeholder="Fee" formControlName="fee" id="recipient-name">
+                                </div>
+                              </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onFormSubmit(); showSuccessMessage()">{{button}}</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    </form>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter35" (click)="openEditForm(rowData)">
+                    edit
+                </button>
+                <button type="button" class="btn btn-warning" (click)="taskfeedelete(rowData.service_ID)">
+                delete
+                </button>
+              </td>
+        </tr>
+    </ng-template>
+</p-table>

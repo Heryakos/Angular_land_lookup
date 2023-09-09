@@ -1,0 +1,57 @@
+<p-toast position="bottom-right" [showTransformOptions]="'translateX(100%)'"></p-toast>
+<p style="background: #84b4f1;color: black;">Plot Type of Use Lookup</p>
+
+<p-table [value]="plottype" [paginator]="true" [rows]="5" class="custom-table">
+    
+    <ng-template pTemplate="header">
+        <tr>
+          <th >
+            Plot Type of Use
+          </th>
+          <th >
+            Customer Type
+          </th>
+            <th>
+                <button type="button" class="btn btn-primary" (click)="displayBasic=true">
+                    <i class="pi pi-plus"></i> Add New
+                </button>
+           </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData>
+        <tr [pSelectableRow]="rowData">
+          <td >
+            {{rowData.type_Of_Use_ID}}
+         </td>
+         <td >
+           {{rowData.type_Of_Use}}
+         </td>
+            <td>
+                <button type="button" class="btn btn-primary edit-button"  (click)="openEditForm(rowData);displayBasic=true">
+                    <i class="pi pi-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-danger delete-button" (click)="plottypeofusedelete(rowData.type_Of_Use_ID)">
+                    <i class="pi pi-trash"></i> 
+                </button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog header="List Of Users" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000" position="top"> 
+     <form [formGroup]="form">
+   
+      <label for="recipient-name" class="col-form-label">Type Of Use</label>
+      <input type="text" class="form-control" placeholder="Type Of Use" formControlName="type_Of_Use" id="recipient-name">
+   
+  </form>
+
+<p-footer>
+  <button type="button"  (click)="displayBasic=false"  class="btn btn-danger">close</button>
+  <button type="button"  class="btn btn-secondary" (click)="displayBasic=false; onFormSubmit();" > {{button}}</button>
+</p-footer>
+</p-dialog>
+
+    
+
+

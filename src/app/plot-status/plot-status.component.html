@@ -1,0 +1,123 @@
+<p-toast position="bottom-right" [showTransformOptions]="'translateX(100%)'"></p-toast>
+<p style="background: #84b4f1;color: black;">Plot Status Lookup</p>
+
+<p-table [value]="plotstatus" [paginator]="true" [rows]="5" class="custom-table">
+    
+    <ng-template pTemplate="header">
+        <tr>
+          <th >
+            ID
+          </th>
+          <th >
+            Plot Status Name
+          </th>
+            <th>
+                <button type="button" class="btn btn-primary" (click)="displayBasic=true">
+                    <i class="pi pi-plus"></i> Add New
+                </button>
+           </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData>
+        <tr [pSelectableRow]="rowData">
+          <td >
+            {{rowData.plot_Status_ID}}
+         </td>
+         <td >
+           {{rowData.name}}
+         </td>
+            <td>
+                <button type="button" class="btn btn-primary edit-button"  (click)="openEditForm(rowData);displayBasic=true">
+                    <i class="pi pi-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-danger delete-button" (click)="plotstatusdelete(rowData.plot_Status_ID)">
+                    <i class="pi pi-trash"></i> 
+                </button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog header="List Of Users" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000" position="top"> 
+     <form [formGroup]="form">
+   
+        <label for="recipient-name" class="col-form-label">Plot Status Name</label>
+        <input type="text" class="form-control" placeholder="Plot Status Name" formControlName="name" id="recipient-name">
+   
+  </form>
+
+<p-footer>
+  <button type="button"  (click)="displayBasic=false"  class="btn btn-danger">close</button>
+  <button type="button"  class="btn btn-secondary" (click)="displayBasic=false; onFormSubmit();" > {{button}}</button>
+</p-footer>
+</p-dialog>
+
+    
+
+
+
+<!-- <p style="background: #84b4f1;color: black;">Plot Status Lookup</p>
+
+<p-table [value]="plotstatus" [paginator]="true" [rows]="5">
+    
+    <ng-template pTemplate="header" >
+        <tr>
+            <th >
+              ID
+            </th>
+            <th >
+              Plot Status Name
+            </th>
+            <th >
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter27">
+                ADD New
+              </button>
+           </th>
+        </tr>
+        
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData >
+        <tr [pSelectableRow]="rowData">
+            <td >
+               {{rowData.plot_Status_ID}}
+            </td>
+            <td >
+              {{rowData.name}}
+            </td>
+            <td>
+                <form [formGroup]="form" >
+                    <div class="modal fade" id="exampleModalCenter27" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle2">List of users</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                  <label for="recipient-name" class="col-form-label">Plot Status Name</label>
+                                  <input type="text" class="form-control" placeholder="Plot Status Name" formControlName="name" id="recipient-name">
+                                </div>
+                              </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onFormSubmit(); showSuccessMessage()">{{button}}</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    </form>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter27" (click)="openEditForm(rowData)">
+                    edit
+                </button>
+                <button type="button" class="btn btn-warning" (click)="plotstatusdelete(rowData.plot_Status_ID)">
+                delete
+                </button>
+              </td>
+        </tr>
+    </ng-template>
+</p-table> -->
