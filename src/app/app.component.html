@@ -1,5 +1,5 @@
 <div class="d-flex align-items-start">
-  <div class="card" style="width: 18rem; margin: 30px; ">
+  <div class="card" style="width: 22rem; margin: 25px; ">
     <p-toolbar [style]="{ background: 'var(--primary-color)', color: 'var(--primary-contrast-color)' }">
       <span>Lookup Tables</span>
     </p-toolbar>
@@ -31,7 +31,7 @@
 
   </div>
  
-    <div class="col-6-lg">
+    <div class="col-6-lg" style="height: 100%;width: 100%; margin-top: 30px; margin-right:30px;">
       <app-customer-status *ngIf="displayCustomerStatus"></app-customer-status>
       <app-customer-type *ngIf="displayCustomerType"></app-customer-type>
       <app-title-deed-transfer *ngIf="displayTitleDeedTransfer"></app-title-deed-transfer>
@@ -39,10 +39,10 @@
       <app-lease-owned-status *ngIf="displayLeaseOwnedStatus"></app-lease-owned-status>
       <app-lease-type *ngIf="displayLeaseType"></app-lease-type>
       <app-measurement-fee *ngIf="displayMeasurementFee"></app-measurement-fee>
-      <app-property-type *ngIf="displayPlotTypeofUse"></app-property-type>
-      <app-plot-type-use *ngIf="displayPlotStatus"> </app-plot-type-use>
-      <app-plot-status *ngIf="displayPropertyStatus"></app-plot-status>
-      <app-property-status *ngIf="displayPropertyType"></app-property-status>
+      <app-property-type *ngIf="displayPropertyType"></app-property-type>
+      <app-plot-type-use *ngIf="displayPlotTypeofUse"> </app-plot-type-use>
+      <app-plot-status *ngIf="displayPlotStatus"></app-plot-status>
+      <app-property-status *ngIf="displayPropertyStatus"></app-property-status>
       <app-suspension-reason *ngIf="displaySuspensionReason"></app-suspension-reason>
       <app-woreda-list *ngIf="displayWoredasList"></app-woreda-list>
       <app-woreda-group *ngIf="displayWoredasGroup"></app-woreda-group>
@@ -56,3 +56,4 @@
   </div>
 </div> 
  
+

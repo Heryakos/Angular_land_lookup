@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../employee.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-task-fee',
   templateUrl: './task-fee.component.html',
-  styleUrls: ['./task-fee.component.css']
+  styleUrls: ['./task-fee.component.css'],
+  providers: [MessageService]
+
 })
 export class TaskFeeComponent implements OnInit {
-
+  displayBasic:boolean=false;
   showSuccess: boolean = false;
   public taskName: any;
   public button='save';
@@ -35,6 +38,8 @@ showSuccessMessage() {
 
   constructor(
     private _empService: EmployeeService,
+    private messageService: MessageService
+
   ) {}
 
   form: FormGroup = new FormGroup({
@@ -109,14 +114,23 @@ onFormSubmit() {
     if(this.form.get('task_Name')?.value!=null||this.form.get('task_Name')?.value!=undefined){
    this._empService.taskfeeadd(this.form.value).subscribe((res)=>{
     this.taskfeeList();
-     })
-      }else{
-        alert('youare not fill customertype');
-      }
+    this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Add successfully' });
+  },
+  (error) => {
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
+  }
+);
+} else {
+alert('You have not filled in the customer status');
+}
       }else{
       this._empService.taskfeeupdate(this.form.value).subscribe((res)=>{
       this.taskfeeList();
-        });
+    },
+    (error) => {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
+    }
+  );
     }
 }
   taskfeeList() {

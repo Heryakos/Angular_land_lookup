@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { EmployeeService } from '../employee.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-// import { error } from 'console';
 
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
-  styleUrls: ['./country.component.css']
+  styleUrls: ['./country.component.css'],
+  providers: [MessageService]
+
 })
-export class CountryComponent implements OnInit {
+export class CountryComponent implements OnInit{
   displayBasic:boolean=false;
   showSuccess: boolean = false;
   public namE: any;
@@ -29,14 +30,14 @@ showSuccessMessage() {
     'action',
   
   ];
-  public country: any;
+  country: any;
 
   constructor(
     private _empService: EmployeeService,
     private messageService: MessageService
 
+  ) {}
 
-  ) { }
   form: FormGroup = new FormGroup({
     code: new FormControl(),
     name: new FormControl(),
@@ -104,15 +105,15 @@ onFormSubmit() {
     if(this.form.get('name')?.value!=null||this.form.get('name')?.value!=undefined){
    this._empService.countryadd(this.form.value).subscribe((res)=>{
     this.countrylist();
-    this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
+    this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Add successfully' });
+  },
+  (error) => {
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
   }
-  )
- //  ,error({ 
-  
- //  })
-   }else{
-     alert('youare not fill customerstatus');
-   }
+);
+} else {
+alert('You have not filled in the customer status');
+}
       }else{
       this._empService.countryupdate(this.form.value).subscribe((res)=>{
       this.countrylist();
@@ -124,6 +125,8 @@ onFormSubmit() {
   countrylist() {
     this._empService.countrylist().subscribe({
       next: (res) => {
+        this.country=res.procCountrys
+        console.log('country',res.procCountrys);
       },
       error: console.log,
     });
@@ -134,6 +137,7 @@ onFormSubmit() {
     this._empService.countrydelete(id).subscribe({
       next: (res) => {
         this.countrylist();
+        this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});
       },
       error: console.log,
     });

@@ -41,15 +41,15 @@ showSuccessMessage() {
   ) {}
 
   form: FormGroup = new FormGroup({
-    customer_Type_ID: new FormControl(),
-    customer_Type: new FormControl(),
+    id: new FormControl(),
+    suspension_Reason: new FormControl(),
     created_By: new FormControl(),
     updated_By:new FormControl(),
     deleted_By: new FormControl(),
+    is_Deleted: new FormControl(new Date().toISOString().substr(0, 10)),
     created_Date: new FormControl(new Date().toISOString().substr(0, 10)),
     updated_Date: new FormControl(new Date().toISOString().substr(0, 10)),
     deleted_Date: new FormControl(new Date().toISOString().substr(0, 10)),
-    has_Capital_Gain: new FormControl(new Date().toISOString().substr(0, 10)),
     // created_Date: new FormControl(new Date().toISOString().substr(0, 10)),
     // licence_type: new FormControl(),
     // file_no: new FormControl(),
@@ -76,11 +76,11 @@ showSuccessMessage() {
   ngOnInit(): void {
     this.suspensionList();
     this.form.patchValue({
-      customer_Type_ID: randomNumber(1,999),
+      id: randomNumber(1,999),
       created_by: generateGuid(),
       updated_By: generateGuid(),
       deleted_By: generateGuid(),
-      has_Capital_Gain:true
+      is_Deleted:true
     })
   }
   openEditForm(data: any) {
@@ -88,12 +88,12 @@ showSuccessMessage() {
     this.customerType=data
     this.form.patchValue(
       {
-        customer_Type_ID:data.customer_Type_ID,
-        customer_Type: data.customer_Type,
+        id:data.id,
+        suspension_Reason: data.suspension_Reason,
         created_by: data.created_by,
         updated_By:data.updated_By,
         deleted_By: data.deleted_By,
-        has_Capital_Gain: data.has_Capital_Gain,
+        is_Deleted: data.is_Deleted,
         created_Date: data.created_Date,
         updated_Date: data.updated_Date,
         deleted_Date: data.deleted_Date,

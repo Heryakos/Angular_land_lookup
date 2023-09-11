@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../employee.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-woreda-group',
   templateUrl: './woreda-group.component.html',
-  styleUrls: ['./woreda-group.component.css']
+  styleUrls: ['./woreda-group.component.css'],
+  providers: [MessageService]
+
 })
 export class WoredaGroupComponent implements OnInit {
+  displayBasic:boolean=false;
   showSuccess: boolean = false;
   public sdPID: any;
   public button='save';
@@ -32,13 +36,15 @@ showSuccessMessage() {
 
   constructor(
     private _empService: EmployeeService,
+    private messageService: MessageService
+
   ) {}
 
   form: FormGroup = new FormGroup({
     id: new FormControl(),
     sdP_ID: new FormControl(),
-    address: new FormControl(),
-    subCity: new FormControl(),
+    woreda_ID: new FormControl(),
+    group_ID: new FormControl(),
     created_By: new FormControl(),
     updated_By:new FormControl(),
     deleted_By: new FormControl(),
@@ -108,10 +114,15 @@ onFormSubmit() {
     if(this.form.get('sdP_ID')?.value!=null||this.form.get('sdP_ID')?.value!=undefined){
    this._empService.woredagroupadd(this.form.value).subscribe((res)=>{
     this.woredagrouplist();
-     })
-      }else{
-        alert('youare not fill customertype');
-      }
+    this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
+  }
+  )
+ //  ,error({ 
+  
+ //  })
+   }else{
+     alert('youare not fill customerstatus');
+   }
       }else{
       this._empService.woredagroupupdate(this.form.value).subscribe((res)=>{
       this.woredagrouplist();

@@ -31,7 +31,6 @@ showSuccessMessage() {
     'assurance',
     'tember',
     'action',
-    // 'dob',
   
   ];
   servicefee: any;
@@ -43,12 +42,10 @@ showSuccessMessage() {
   ) {}
 
   form: FormGroup = new FormGroup({
-    id: new FormControl(),
     service_ID: new FormControl(),
-    task_ID: new FormControl(),
-    task_Name: new FormControl(),
-    property_Type: new FormControl(),
-    fee: new FormControl(),
+    service_fee1: new FormControl(),
+    assurance: new FormControl(),
+    tember: new FormControl(),
     created_By: new FormControl(),
     updated_By:new FormControl(),
     deleted_By: new FormControl(),
@@ -94,12 +91,10 @@ showSuccessMessage() {
     this.customerType=data
     this.form.patchValue(
       {
-        id:data.id,
         service_ID: data.service_ID,
-        task_ID: data.task_ID,
-        task_Name: data.task_Name,
-        property_Type: data.property_Type,
-        fee: data.fee,
+        service_fee1: data.service_fee1,
+        assurance: data.assurance,
+        tember: data.tember,
         created_by: data.created_by,
         updated_By:data.updated_By,
         deleted_By: data.deleted_By,

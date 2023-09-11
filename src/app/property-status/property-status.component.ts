@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../employee.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-property-status',
   templateUrl: './property-status.component.html',
-  styleUrls: ['./property-status.component.css']
+  styleUrls: ['./property-status.component.css'],
+  providers: [MessageService]
+
 })
 export class PropertyStatusComponent implements OnInit {
-
+  displayBasic:boolean=false;
   showSuccess: boolean = false;
   public propertyStatus: any;
   public button='save';
@@ -34,6 +37,8 @@ showSuccessMessage() {
 
   constructor(
     private _empService: EmployeeService,
+    private messageService: MessageService
+
   ) {}
 
   form: FormGroup = new FormGroup({
@@ -108,13 +113,22 @@ onFormSubmit() {
     if(this.form.get('property_Status')?.value!=null||this.form.get('property_Status')?.value!=undefined){
    this._empService.customertypeadd(this.form.value).subscribe((res)=>{
     this.propertystatuslist();
-     })
-      }else{
-        alert('youare not fill customertype');
-      }
+    this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
+  },
+  
+  (error) => {
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
+  }
+);
+   }else{
+     alert('youare not fill customerstatus');
+   }
       }else{
       this._empService.propertystatusupdate(this.form.value).subscribe((res)=>{
       this.propertystatuslist();
+        },
+        (error) => {
+          this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
         });
     }
 }

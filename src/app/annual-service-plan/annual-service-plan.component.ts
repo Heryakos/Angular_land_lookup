@@ -2,13 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import {TableModule} from 'primeng/table';
 import { EmployeeService } from '../employee.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-annual-service-plan',
   templateUrl: './annual-service-plan.component.html',
-  styleUrls: ['./annual-service-plan.component.css']
+  styleUrls: ['./annual-service-plan.component.css'],
+  providers: [MessageService]
+
 })
 export class AnnualServicePlanComponent implements OnInit {
+  displayBasic:boolean=false;
   showSuccess: boolean = false;
   public erviceName: any;
   public button='save';
@@ -33,14 +37,25 @@ showSuccessMessage() {
   ];
   annualplan: any;
   constructor(
-    private _empService: EmployeeService
-    
+    private _empService: EmployeeService,
+    private messageService: MessageService
     ) {
 
   }
   form: FormGroup = new FormGroup({
-    customer_Type_ID: new FormControl(),
-    customer_Type: new FormControl(),
+    planID: new FormControl(),
+    service_ID: new FormControl(),
+    service_Name: new FormControl(),
+    description: new FormControl(),
+    budget_Year: new FormControl(),
+    start_Date_GC: new FormControl(),
+    end_Date_GC: new FormControl(),
+    grand_Plan_Per_Year: new FormControl(),
+    accomplished: new FormControl(),
+    income_Planed: new FormControl(),
+    income_Collected: new FormControl(),
+    number_of_Pend_Process_Min: new FormControl(),
+    number_of_Pend_process: new FormControl(),
     created_By: new FormControl(),
     updated_By:new FormControl(),
     deleted_By: new FormControl(),
@@ -71,7 +86,6 @@ showSuccessMessage() {
     // select_site: new FormControl(),
     
   })
-
 
   ngOnInit(): void {
     this.annualplanList();
@@ -118,10 +132,15 @@ onFormSubmit() {
     if(this.form.get('service_Name')?.value!=null||this.form.get('service_Name')?.value!=undefined){
    this._empService.annualplanadd(this.form.value).subscribe((res)=>{
     this.annualplanList();
-     })
-      }else{
-        alert('youare not fill customertype');
-      }
+    this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Add successfully' });
+  },
+  (error) => {
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
+  }
+);
+} else {
+alert('You have not filled in the customer status');
+}
       }else{
       this._empService.annualplanupdate(this.form.value).subscribe((res)=>{
       this.annualplanList();
@@ -144,6 +163,7 @@ onFormSubmit() {
     this._empService.annualplandelete(id).subscribe({
       next: (res) => {
         this.annualplanList();
+        this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});
       },
       error: console.log,
     });

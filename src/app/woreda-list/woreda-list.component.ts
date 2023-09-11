@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../employee.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-woreda-list',
   templateUrl: './woreda-list.component.html',
-  styleUrls: ['./woreda-list.component.css']
+  styleUrls: ['./woreda-list.component.css'],
+  providers: [MessageService]
+
 })
 export class WoredaListComponent implements OnInit {
-
+  displayBasic:boolean=false;
   showSuccess: boolean = false;
   public woredaName: any;
   public button='save';
@@ -33,6 +36,8 @@ showSuccessMessage() {
 
   constructor(
     private _empService: EmployeeService,
+    private messageService: MessageService
+
   ) {}
 
   form: FormGroup = new FormGroup({
@@ -108,14 +113,23 @@ onFormSubmit() {
     if(this.form.get('woreda_Name')?.value!=null||this.form.get('woreda_Name')?.value!=undefined){
    this._empService.woredaidadd(this.form.value).subscribe((res)=>{
     this.woredaidList();
-     })
-      }else{
-        alert('youare not fill customertype');
-      }
+    this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
+  },
+  
+  (error) => {
+  this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
+}
+);
+   }else{
+     alert('youare not fill customerstatus');
+   }
       }else{
       this._empService.woredaidupdate(this.form.value).subscribe((res)=>{
       this.woredaidList();
-        });
+    },
+    (error) => {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
+    });
     }
 }
   woredaidList() {

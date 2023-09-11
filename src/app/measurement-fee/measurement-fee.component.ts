@@ -7,7 +7,9 @@ import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-measurement-fee',
   templateUrl: './measurement-fee.component.html',
-  styleUrls: ['./measurement-fee.component.css']
+  styleUrls: ['./measurement-fee.component.css'],
+  providers: [MessageService]
+
 })
 export class MeasurementFeeComponent implements OnInit {
   displayBasic:boolean=false;
@@ -29,7 +31,6 @@ showSuccessMessage() {
     'to_M2',
     'amount',
     'action',
-    // 'dob',
   
   ];
   measurementfee: any;

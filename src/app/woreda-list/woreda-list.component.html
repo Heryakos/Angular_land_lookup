@@ -1,79 +1,73 @@
+<p-toast position="bottom-right" [showTransformOptions]="'translateX(100%)'"></p-toast>
 <p style="background: #84b4f1;color: black;">List of Woredas in Sub Cities</p>
 
-<p-table [value]="woredaid" [paginator]="true" [rows]="5">
+<p-table [value]="woredaid" [paginator]="true" [rows]="5" class="custom-table">
     
-    <ng-template pTemplate="header" >
+    <ng-template pTemplate="header">
         <tr>
-            <th >
-                ID
-              </th>
-              <th >
-                Woreda Name
-              </th>
-              <th>
-                Address
-              </th>
-            <th >
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter38">
-                ADD New
-              </button>
+          <th >
+            ID
+          </th>
+          <th >
+            Woreda Name
+          </th>
+          <th>
+            Address
+          </th>
+            <th>
+                <button type="button" class="btn btn-primary" (click)="displayBasic=true">
+                    <i class="pi pi-plus"></i> Add New
+                </button>
            </th>
         </tr>
-        
     </ng-template>
-    <ng-template pTemplate="body" let-rowData >
+    <ng-template pTemplate="body" let-rowData>
         <tr [pSelectableRow]="rowData">
-            <td >
-                {{rowData.woreda_ID}}
-             </td>
-             <td >
-               {{rowData.woreda_Name}}
-             </td>
-             <td >
-               {{rowData.address}}
-             </td>
+          <td >
+            {{rowData.woreda_ID}}
+         </td>
+         <td >
+           {{rowData.woreda_Name}}
+         </td>
+         <td >
+          {{rowData.address}}
+        </td>
             <td>
-                <form [formGroup]="form" >
-                    <div class="modal fade" id="exampleModalCenter38" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
-                      <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalCenterTitle2">List of users</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <form>
-                                <div class="mb-3">
-                                  <label for="recipient-name" class="col-form-label">ID</label>
-                                  <input type="text" class="form-control" placeholder="ID" formControlName="woreda_ID" id="recipient-name">
-                                </div>
-                                <div class="mb-3">
-                                  <label for="recipient-name" class="col-form-label">woreda_Name</label>
-                                  <input type="text" class="form-control" placeholder="woreda_Name" formControlName="woreda_Name" id="recipient-name">
-                                </div>
-                                <div class="mb-3">
-                                  <label for="recipient-name" class="col-form-label">Address</label>
-                                  <input type="text" class="form-control" placeholder="Address" formControlName="address" id="recipient-name">
-                                </div>
-                              </form>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onFormSubmit(); showSuccessMessage()">{{button}}</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    </form>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter38" (click)="openEditForm(rowData)">
-                    edit
+                <button type="button" class="btn btn-primary edit-button"  (click)="openEditForm(rowData);displayBasic=true">
+                    <i class="pi pi-pencil"></i>
                 </button>
-                <button type="button" class="btn btn-warning" (click)="woredaiddelete(rowData.woreda_ID)">
-                delete
+                <button type="button" class="btn btn-danger delete-button" (click)="woredaiddelete(rowData.woreda_ID)">
+                    <i class="pi pi-trash"></i> 
                 </button>
-              </td>
+            </td>
         </tr>
     </ng-template>
 </p-table>
+
+<p-dialog header="List Of Users" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000" position="top"> 
+     <form [formGroup]="form">
+   
+      <div class="mb-3">
+        <label for="recipient-name" class="col-form-label">ID</label>
+        <input type="text" class="form-control" placeholder="ID" formControlName="woreda_ID" id="recipient-name">
+      </div>
+      <div class="mb-3">
+        <label for="recipient-name" class="col-form-label">woreda_Name</label>
+        <input type="text" class="form-control" placeholder="woreda_Name" formControlName="woreda_Name" id="recipient-name">
+      </div>
+      <div class="mb-3">
+        <label for="recipient-name" class="col-form-label">Address</label>
+        <input type="text" class="form-control" placeholder="Address" formControlName="address" id="recipient-name">
+      </div>
+  </form>
+
+<p-footer>
+  <button type="button"  (click)="displayBasic=false"  class="btn btn-danger">close</button>
+  <button type="button"  class="btn btn-secondary" (click)="displayBasic=false; onFormSubmit();" > {{button}}</button>
+</p-footer>
+</p-dialog>
+
+    
+
+
+

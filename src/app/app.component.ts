@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent  {
+export class AppComponent {
   displayCustomerStatus: boolean = true;
   displayCustomerType: boolean = false;
   displayTitleDeedTransfer: boolean = false;
@@ -26,6 +26,8 @@ export class AppComponent  {
   displayTaskFee: boolean = false;
   displayCountry: boolean = false;
   displayServiceBlockRegistration: boolean = false;
+  selectedlookup: any;
+  selectedlookupis: boolean = false;
 
   showCustomerStatus() {
     this.displayCustomerStatus = true;
@@ -462,7 +464,6 @@ export class AppComponent  {
     this.displayServiceDetail = false;
     this.displayServiceFee = false;
     this.displayTaskFee = false;
-    this.displayCountry = false;
     this.displayServiceBlockRegistration = false;
   }
 
@@ -488,5 +489,7 @@ export class AppComponent  {
     this.displayCountry = false;
     this.displayServiceBlockRegistration = true;
   }
+
 }
+
 
