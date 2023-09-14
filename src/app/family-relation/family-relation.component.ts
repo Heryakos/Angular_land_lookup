@@ -103,7 +103,13 @@ showSuccessMessage() {
     )
 
   }   
-
+  openAddForm() {
+    this.button = 'Save';
+    this.form.reset({
+      id: randomNumber(1,999)
+    })
+   this.RelationShip = null; 
+  }
   onFormSubmit() {
     console.log('relationship',this.form.get('relationShip')?.value);
     if(this.RelationShip==null||this.RelationShip==undefined){  
@@ -112,20 +118,24 @@ showSuccessMessage() {
 
    this._empService.familyadd(this.form.value).subscribe((res)=>{
     this.familylist();
-    this.messageService.add({severity:'success', summary: 'Success Message', detail:'Order submitted'});
+    this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Add successfully' });
+  },
+  (error) => {
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
   }
-  )
- //  ,error({ 
-  
- //  })
+);
    }else{
-     alert('youare not fill customerstatus');
+     alert('youare not fill family relation');
    }
       }else{
       this._empService.familyupdate(this.form.value).subscribe((res)=>{
       this.familylist();
-        });
+    },
+    (error) => {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
     }
+  );
+}
 }
 
   familylist() {
@@ -147,6 +157,7 @@ showSuccessMessage() {
     this._empService.familydelete(id).subscribe({
       next: (res) => {
         this.familylist();
+        this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});
       },
       error: console.log,
     });

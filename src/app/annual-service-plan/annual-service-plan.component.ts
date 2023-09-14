@@ -14,7 +14,7 @@ import { MessageService } from 'primeng/api';
 export class AnnualServicePlanComponent implements OnInit {
   displayBasic:boolean=false;
   showSuccess: boolean = false;
-  public erviceName: any;
+  public serviceName: any;
   public button='save';
 
 showSuccessMessage() {
@@ -99,7 +99,7 @@ showSuccessMessage() {
   }
   openEditForm(data: any) {
     this.button='Update'
-    this.erviceName=data
+    this.serviceName=data
     this.form.patchValue(
       {
         planID:data.planID,
@@ -126,9 +126,16 @@ showSuccessMessage() {
     )
 
   }   
+  openAddForm() {
+    this.button = 'Save';
+    this.form.reset({
+      planID: randomNumber(1,999)
+    })
+    this.serviceName = null; 
+  }
 onFormSubmit() {
-    console.log('ervicename',this.form.get('erviceName')?.value);
-    if(this.erviceName==null||this.erviceName==undefined){  
+    console.log('servicename',this.form.get('serviceName')?.value);
+    if(this.serviceName==null||this.serviceName==undefined){  
     if(this.form.get('service_Name')?.value!=null||this.form.get('service_Name')?.value!=undefined){
    this._empService.annualplanadd(this.form.value).subscribe((res)=>{
     this.annualplanList();
@@ -139,25 +146,29 @@ onFormSubmit() {
   }
 );
 } else {
-alert('You have not filled in the customer status');
+alert('You have not filled in the annual service plan');
 }
       }else{
       this._empService.annualplanupdate(this.form.value).subscribe((res)=>{
       this.annualplanList();
-        });
+    },
+    (error) => {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
     }
+  );
+}
 }
 
-  annualplanList() {
-    this._empService.annualplanList().subscribe({
-      next: (res) => {
-        console.log('annualplan',res.procService_Plans);
+annualplanList() {
+  this._empService.annualplanList().subscribe({
+    next: (res) => {
+      this.annualplan=res.procService_Plans
+      console.log('annualplan',res.procService_Plans);
 
-        
-      },
-      error: console.log,
-    });
-  }
+    },
+    error: console.log,
+  });
+}
 
   annualplandelete(id: number) {
     this._empService.annualplandelete(id).subscribe({

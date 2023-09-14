@@ -108,6 +108,13 @@ showSuccessMessage() {
     )
 
   }   
+  openAddForm() {
+    this.button = 'Save';
+    this.form.reset({
+      id: randomNumber(1,999)
+    })
+    this.sdPID = null; 
+  }
 onFormSubmit() {
     console.log('sdPid',this.form.get('sdP_ID')?.value);
     if(this.sdPID==null||this.sdPID==undefined){  
@@ -115,19 +122,23 @@ onFormSubmit() {
    this._empService.woredagroupadd(this.form.value).subscribe((res)=>{
     this.woredagrouplist();
     this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
+  },
+  (error) => {
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
   }
-  )
- //  ,error({ 
-  
- //  })
+);
    }else{
-     alert('youare not fill customerstatus');
+     alert('youare not fill woreda group');
    }
       }else{
       this._empService.woredagroupupdate(this.form.value).subscribe((res)=>{
       this.woredagrouplist();
-        });
+    },
+    (error) => {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
     }
+  );
+}
 }
 
   woredagrouplist() {
@@ -148,6 +159,7 @@ onFormSubmit() {
     this._empService.taskfeedelete(id).subscribe({
       next: (res) => {
         this.woredagrouplist();
+        this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});
       },
       error: console.log,
     });

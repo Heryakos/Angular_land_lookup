@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../employee.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-service-block-registration',
   templateUrl: './service-block-registration.component.html',
-  styleUrls: ['./service-block-registration.component.css']
+  styleUrls: ['./service-block-registration.component.css'],
+  providers: [MessageService]
+
 })
 export class ServiceBlockRegistrationComponent implements OnInit {
-
+  displayBasic:boolean=false;
   showSuccess: boolean = false;
   public woredaID: any;
   public button='save';
@@ -25,9 +28,10 @@ showSuccessMessage() {
   data: any;
   displayedColumns: string[] = [
     'woreda_ID',
+    'subCity',
     'blocked_No',
-    'start_Date',  
-    'end_Date',  
+    'start_Date_GC',
+    'end_Date_GC', 
     'active_Remark',    
     'action'
   ];
@@ -38,6 +42,8 @@ showSuccessMessage() {
   }
   constructor(
     private _empService: EmployeeService,
+    private messageService: MessageService
+
   ) {}
 
   saveForm(){
@@ -49,9 +55,10 @@ showSuccessMessage() {
     service_ID: new FormControl(),
     sdP_ID: new FormControl(),
     woreda_ID: new FormControl(),
+    subCity: new FormControl(),
     blocked_No: new FormControl(),
-    start_Date: new FormControl(new Date().toISOString().substr(0, 10)),
-    end_Date: new FormControl(new Date().toISOString().substr(0, 10)),
+    start_Date_GC: new FormControl(),
+    end_Date_GC: new FormControl(),
     is_Active: new FormControl(),
     active_Remark: new FormControl(),
     deactive_Remark: new FormControl(),
@@ -115,10 +122,11 @@ showSuccessMessage() {
         block_ID:data.block_ID,
         service_ID: data.service_ID,
         sdP_ID: data.sdP_ID,
+        subCity:data.subCity,
         woreda_ID:data.woreda_ID,
         blocked_No: data.blocked_No,
-        start_Date: data.start_Date,
-        end_Date: data.end_Date,
+        start_Date_GC: data.start_Date_GC,
+        end_Date_GC: data.end_Date_GC,
         is_Active: data.is_Active,
         active_Remark: data.active_Remark,
         is_Deleted: data.is_Deleted,
@@ -135,15 +143,24 @@ onFormSubmit() {
     if(this.form.get('woreda_ID')?.value!=null||this.form.get('woreda_ID')?.value!=undefined){
    this._empService.serviceblockadd(this.form.value).subscribe((res)=>{
     this.serviceblockList();
-     })
+    this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Add successfully' });
+  },
+  (error) => {
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
+  }
+);
       }else{
-        alert('youare not fill customertype');
+        alert('youare not fill service block registration');
       }
       }else{
       this._empService.serviceblockupdate(this.form.value).subscribe((res)=>{
       this.serviceblockList();
-        });
+    },
+    (error) => {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
     }
+  );
+}
 }
 
   serviceblockList() {
@@ -167,6 +184,7 @@ onFormSubmit() {
     this._empService.serviceblockdelete(id).subscribe({
       next: (res) => {
         this.serviceblockList();
+        this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});
       },
       error: console.log,
     });

@@ -98,7 +98,14 @@ showSuccessMessage() {
       }
     )
 
-  }   
+  } 
+  openAddForm() {
+    this.button = 'Save';
+    this.form.reset({
+      code: randomNumber(1,999)
+    })
+    this.namE = null; 
+  }  
 onFormSubmit() {
     console.log('Name',this.form.get('name')?.value);
     if(this.namE==null||this.namE==undefined){  
@@ -112,13 +119,17 @@ onFormSubmit() {
   }
 );
 } else {
-alert('You have not filled in the customer status');
+alert('You have not filled in the country');
 }
       }else{
       this._empService.countryupdate(this.form.value).subscribe((res)=>{
       this.countrylist();
-        });
+    },
+    (error) => {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
     }
+  );
+}
 }
 
 

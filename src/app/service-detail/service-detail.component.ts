@@ -119,6 +119,13 @@ showSuccessMessage() {
     )
 
   }   
+  openAddForm() {
+    this.button = 'Save';
+    this.form.reset({
+      plan_ID: randomNumber(1,999)
+    })
+    this.numServicePerday = null; 
+  }
 onFormSubmit() {
     console.log('customertype',this.form.get('num_Service_Per_day')?.value);
     if(this.numServicePerday==null||this.numServicePerday==undefined){  
@@ -126,19 +133,23 @@ onFormSubmit() {
    this._empService.customertypeadd(this.form.value).subscribe((res)=>{
     this.servicedetailList();
     this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
+  },
+  (error) => {
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
   }
-  )
- //  ,error({ 
-  
- //  })
+);
    }else{
-     alert('youare not fill customerstatus');
+     alert('youare not fill service detail');
    }
       }else{
       this._empService.serviceblockupdate(this.form.value).subscribe((res)=>{
       this.servicedetailList();
-        });
+    },
+    (error) => {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
     }
+  );
+}
 }
 
   servicedetailList() {
@@ -159,6 +170,7 @@ onFormSubmit() {
     this._empService.servicedetaildelete(id).subscribe({
       next: (res) => {
         this.servicedetailList();
+        this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});
       },
       error: console.log,
     });

@@ -103,6 +103,13 @@ showSuccessMessage() {
     )
 
   }   
+  openAddForm() {
+    this.button = 'Save';
+    this.form.reset({
+      transfer_ID: randomNumber(1,999)
+    })
+    this.Type = null; 
+  }
 onFormSubmit() {
     console.log('type',this.form.get('type')?.value);
     if(this.Type==null||this.Type==undefined){  
@@ -110,19 +117,23 @@ onFormSubmit() {
    this._empService.transfertypeadd(this.form.value).subscribe((res)=>{
     this.transfertypelist();
     this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
+  },
+  (error) => {
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
   }
-  )
- //  ,error({ 
-  
- //  })
+);
    }else{
-     alert('youare not fill customerstatus');
+     alert('youare not fill title deed transfer');
    }
       }else{
       this._empService.transfertypeupdate(this.form.value).subscribe((res)=>{
       this.transfertypelist();
-        });
+    },
+    (error) => {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
     }
+  );
+}
 }
 
   transfertypelist() {
@@ -144,6 +155,7 @@ onFormSubmit() {
     this._empService.transfertypedelete(id).subscribe({
       next: (res) => {
         this.transfertypelist();
+        this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});
       },
       error: console.log,
     });

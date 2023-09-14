@@ -107,6 +107,13 @@ showSuccessMessage() {
     )
 
   }   
+  openAddForm() {
+    this.button = 'Save';
+    this.form.reset({
+      p_Status_ID: randomNumber(1,999)
+    })
+        this.propertyStatus = null; 
+  }
 onFormSubmit() {
     console.log('propertystatus',this.form.get('property_Status')?.value);
     if(this.propertyStatus==null||this.propertyStatus==undefined){  
@@ -149,6 +156,7 @@ onFormSubmit() {
     this._empService.propertystatusdelete(id).subscribe({
       next: (res) => {
         this.propertystatuslist();
+        this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});
       },
       error: console.log,
     });

@@ -106,7 +106,14 @@ showSuccessMessage() {
       }
     )
 
-  }   
+  }  
+  openAddForm() {
+    this.button = 'Save';
+    this.form.reset({
+      woreda_ID: randomNumber(1,999)
+    })
+    this.woredaName = null; 
+  } 
 onFormSubmit() {
     console.log('woredaname',this.form.get('woreda_Name')?.value);
     if(this.woredaName==null||this.woredaName==undefined){  
@@ -121,7 +128,7 @@ onFormSubmit() {
 }
 );
    }else{
-     alert('youare not fill customerstatus');
+     alert('youare not fill woreda list');
    }
       }else{
       this._empService.woredaidupdate(this.form.value).subscribe((res)=>{
@@ -150,6 +157,7 @@ onFormSubmit() {
     this._empService.woredaiddelete(id).subscribe({
       next: (res) => {
         this.woredaidList();
+        this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});
       },
       error: console.log,
     });

@@ -103,6 +103,13 @@ form: FormGroup = new FormGroup({
           )
       
         }   
+        openAddForm() {
+          this.button = 'Save';
+          this.form.reset({
+            id: 1
+          })
+          this.customerStatus = null; 
+        }
    onFormSubmit() {
           console.log('customerstatus',this.form.get('customer_Status')?.value);
           
@@ -113,22 +120,26 @@ form: FormGroup = new FormGroup({
          console.log('formmm',this.form.value);
          this._empService.addEmployee(this.form.value).subscribe((res)=>{
           this.getEmployeeList();
-          this.messageService.add({severity:'success', summary: 'Success Message', detail:'Order submitted'});
-           }
-           )
-          //  ,error({ 
-           
-          //  })
+          this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Add successfully' });
+        },
+        (error) => {
+          this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
+        }
+      );
             }else{
-              alert('youare not fill customerstatus');
+              alert('youare not fill customer status');
             }
           }else{
 
             this._empService.updateEmployee(this.form.value).subscribe((res)=>{
     
     this.getEmployeeList();
-              });
-          }
+  },
+  (error) => {
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
+  }
+);
+}
   }
 
   getEmployeeList() {
@@ -147,6 +158,7 @@ form: FormGroup = new FormGroup({
     this._empService.deleteEmployee(id).subscribe({
       next: (customer) => {
         this.getEmployeeList();
+        this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});
       },
       error: console.log,
     });

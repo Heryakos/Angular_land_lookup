@@ -101,6 +101,13 @@ showSuccessMessage() {
     )
 
   } 
+  openAddForm() {
+    this.button = 'Save';
+    this.form.reset({
+      plot_Status_ID: randomNumber(1,999)
+    })
+        this.customerType = null; 
+  }
   onFormSubmit() {
     console.log('Name',this.form.get('name')?.value);
     if(this.customerType==null||this.customerType==undefined){  
@@ -108,19 +115,23 @@ showSuccessMessage() {
    this._empService.plotstatusadd(this.form.value).subscribe((res)=>{
     this.plotstatuslist();
     this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
+  },
+  (error) => {
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
   }
-  )
- //  ,error({ 
-  
- //  })
+);
    }else{
-     alert('youare not fill customerstatus');
+     alert('youare not fill plot status');
    }
       }else{
       this._empService.plotstatusupdate(this.form.value).subscribe((res)=>{
       this.plotstatuslist();
-        });
+    },
+    (error) => {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
     }
+  );
+}
 }
   plotstatuslist() {
     this._empService.plotstatuslist().subscribe({
@@ -137,6 +148,8 @@ showSuccessMessage() {
     this._empService.plotstatusdelete(id).subscribe({
       next: (res) => {
         this.plotstatuslist();
+        this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});
+
       },
       error: console.log,
     });

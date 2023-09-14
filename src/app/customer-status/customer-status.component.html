@@ -8,7 +8,7 @@
             <th>ID</th>
             <th>Customer Status</th>
             <th>
-                <button type="button" class="btn btn-primary" (click)="displayBasic=true">
+                <button type="button" class="btn btn-primary" (click)="openAddForm();displayBasic=true">
                     <i class="pi pi-plus"></i> Add New
                 </button>
            </th>
@@ -34,8 +34,8 @@
 <p-dialog header="List Of Users" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000" position="top"> 
     <form [formGroup]="form">
    
-          <label for="recipient-name" class="col-form-label">Customer Type</label>
-          <input type="text" class="form-control" placeholder="Customer Type" formControlName="customer_Status" id="recipient-name">
+          <label for="recipient-name" class="col-form-label">Customer Status </label>
+          <input type="text" class="form-control" placeholder="Customer Status " formControlName="customer_Status" id="recipient-name">
      
   </form>
    

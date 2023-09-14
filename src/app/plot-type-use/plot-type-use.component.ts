@@ -102,7 +102,14 @@ showSuccessMessage() {
       }
     )
 
-  }   
+  } 
+  openAddForm() {
+    this.button = 'Save';
+    this.form.reset({
+      type_Of_Use_ID: randomNumber(1,999)
+    })
+      this.typeOfUse = null; 
+  }  
 onFormSubmit() {
     console.log('typeofuse',this.form.get('type_Of_Use')?.value);
     if(this.typeOfUse==null||this.typeOfUse==undefined){  
@@ -110,19 +117,23 @@ onFormSubmit() {
    this._empService.plottypeofuseadd(this.form.value).subscribe((res)=>{
     this.plottypeofuselist();
     this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
+  },
+  (error) => {
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
   }
-  )
- //  ,error({ 
-  
- //  })
+);
    }else{
-     alert('youare not fill customerstatus');
+     alert('youare not fill plot type use');
    }
       }else{
       this._empService.plottypeofuseupdate(this.form.value).subscribe((res)=>{
       this.plottypeofuselist();
-        });
+    },
+    (error) => {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
     }
+  );
+}
 }
 
   plottypeofuselist() {
@@ -143,6 +154,8 @@ onFormSubmit() {
     this._empService.plottypeofusedelete(id).subscribe({
       next: (res) => {
         this.plottypeofuselist();
+        this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});
+
       },
       error: console.log,
     });

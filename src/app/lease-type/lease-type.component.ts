@@ -103,6 +103,13 @@ showSuccessMessage() {
     )
 
   } 
+  openAddForm() {
+    this.button = 'Save';
+    this.form.reset({
+      lease_Type_ID: randomNumber(1,999)
+    })   
+     this.leaseType = null; 
+  }
   onFormSubmit() {
     console.log('leasetype',this.form.get('lease_Type')?.value);
     if(this.leaseType==null||this.leaseType==undefined){  
@@ -111,20 +118,24 @@ showSuccessMessage() {
 
    this._empService.leasetypeadd(this.form.value).subscribe((res)=>{
     this.leasetypeupdatelist();
-    this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
+    this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Add successfully' });
+  },
+  (error) => {
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
   }
-  )
- //  ,error({ 
-  
- //  })
+);
    }else{
-     alert('youare not fill customerstatus');
+     alert('youare not fill lease type');
    }
       }else{
       this._empService.leasetypeupdate(this.form.value).subscribe((res)=>{
       this.leasetypeupdatelist();
-        });
+    },
+    (error) => {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
     }
+  );
+}
 }
 
   leasetypeupdatelist() {
@@ -142,6 +153,7 @@ showSuccessMessage() {
     this._empService.leasetypedelete(id).subscribe({
       next: (res) => {
         this.leasetypeupdatelist();
+        this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});
       },
       error: console.log,
     });

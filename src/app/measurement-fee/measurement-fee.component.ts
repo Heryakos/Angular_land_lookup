@@ -107,6 +107,13 @@ showSuccessMessage() {
     )
 
   }
+  openAddForm() {
+    this.button = 'Save';
+    this.form.reset({
+      measurement_Fee_ID: randomNumber(1,999)
+    })   
+     this.fromM2 = null; 
+  }
   onFormSubmit() {
     console.log('from',this.form.get('from_M2')?.value);
     if(this.fromM2==null||this.fromM2==undefined){  
@@ -114,20 +121,24 @@ showSuccessMessage() {
 
    this._empService.measurementfeeadd(this.form.value).subscribe((res)=>{
     this.measurementfeeList();
-    this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
+    this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Add successfully' });
+  },
+  (error) => {
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
   }
-  )
- //  ,error({ 
-  
- //  })
+);
    }else{
-     alert('youare not fill customerstatus');
+     alert('youare not fill measurement fee');
    }
       }else{
       this._empService.measurementfeeupdate(this.form.value).subscribe((res)=>{
       this.measurementfeeList();
-        });
+    },
+    (error) => {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
     }
+  );
+}
 }
 
   measurementfeeList() {
@@ -148,6 +159,7 @@ showSuccessMessage() {
     this._empService.measurementfeedelete(id).subscribe({
       next: (res) => {
         this.measurementfeeList();
+        this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});
       },
       error: console.log,
     });

@@ -1,5 +1,17 @@
 <p-toast position="bottom-right" [showTransformOptions]="'translateX(100%)'"></p-toast>
 <p style="background: #84b4f1;color: black;">Sub Cities Annual Service Provision Plan</p> 
+<form [formGroup]="form" class="form-container">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+<div class="col-md-6">
+  <div class="form-group">
+    <label for="blockedNo">Budget Year:</label>
+    <input formControlName="budget_Year" type="text" class="form-control" id="blockedNo" placeholder="Budget Year:">
+  </div>
+</div>
+      </div>
+    </div>
 
 <p-table [value]="annualplan" [paginator]="true" [rows]="5" class="custom-table">
     
@@ -27,9 +39,9 @@
             Annual Grand Plan
           </th>
             <th>
-                <button type="button" class="btn btn-primary" (click)="displayBasic=true">
-                    <i class="pi pi-plus"></i> Add New
-                </button>
+              <button type="button" class="btn btn-primary" (click)="openAddForm();displayBasic=true">
+                <i class="pi pi-plus"></i> Add New
+            </button>
            </th>
         </tr>
     </ng-template>
@@ -47,9 +59,9 @@
          <td >
            {{rowData.budget_Year}}
          </td>
-         <td >
+         <!-- <td >
            {{rowData.customer_Type}}
-         </td>
+         </td> -->
          <td >
            {{rowData.start_Date_GC}}
          </td>
@@ -85,14 +97,20 @@
       <label for="recipient-name" class="col-form-label">Budget Year</label>
       <input type="text" class="form-control" placeholder="Budget Year" formControlName="budget_Year" id="recipient-name">
     </div>
-    <div class="mb-3">
-      <label for="recipient-name" class="col-form-label">Start Date</label>
-      <input type="text" class="form-control" placeholder="Start Date" formControlName="start_Date_GC" id="recipient-name">
-    </div>
-    <div class="mb-3">
-      <label for="recipient-name" class="col-form-label">End Date</label>
-      <input type="text" class="form-control" placeholder="End Date" formControlName="end_Date_GC" id="recipient-name">
-    </div>
+     <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="startDate">Start Date</label>
+              <input formControlName="start_Date_GC" type="date" class="form-control" id="startDate">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="endDate">End Date</label>
+              <input formControlName="end_Date_GC" type="date" class="form-control" id="endDate">
+            </div>
+          </div>
+        </div>
     <div class="mb-3">
       <label for="recipient-name" class="col-form-label">Annual Grand Plan</label>
       <input type="text" class="form-control" placeholder="Annual Grand Plan" formControlName="grand_Plan_Per_Year" id="recipient-name">

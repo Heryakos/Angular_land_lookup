@@ -101,6 +101,13 @@ showSuccessMessage() {
       }
       )
     }
+    openAddForm() {
+      this.button = 'Save';
+      this.form.reset({
+        customer_Type_ID: randomNumber(1,999)
+      })
+      this.customerType = null; 
+    }
     onFormSubmit(): void {
       console.log('customertype', this.form.get('customer_Type')?.value);
       if (this.customerType == null || this.customerType == undefined) {
@@ -115,7 +122,7 @@ showSuccessMessage() {
             }
           );
         } else {
-          alert('You have not filled in the customer status');
+          alert('You have not filled in the customer type');
         }
       } else {
         this._empService.customertypeupdate(this.form.value).subscribe(

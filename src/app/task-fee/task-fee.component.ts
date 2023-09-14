@@ -82,7 +82,7 @@ showSuccessMessage() {
   ngOnInit(): void {
     this.taskfeeList();
     this.form.patchValue({
-      service_ID: randomNumber(1,999),
+      service_ID: generateGuid(),
       created_by: generateGuid(),
       updated_By: generateGuid(),
       deleted_By: generateGuid(),
@@ -107,7 +107,14 @@ showSuccessMessage() {
       }
     )
 
-  }   
+  }  
+  openAddForm() {
+    this.button = 'Save';
+    this.form.reset({
+      service_ID: generateGuid()
+    })
+    this.taskName = null; 
+  } 
 onFormSubmit() {
     console.log('taskname',this.form.get('task_Name')?.value);
     if(this.taskName==null||this.taskName==undefined){  
@@ -121,7 +128,7 @@ onFormSubmit() {
   }
 );
 } else {
-alert('You have not filled in the customer status');
+alert('You have not filled in the task fee');
 }
       }else{
       this._empService.taskfeeupdate(this.form.value).subscribe((res)=>{
@@ -151,6 +158,7 @@ alert('You have not filled in the customer status');
     this._empService.taskfeedelete(id).subscribe({
       next: (res) => {
         this.taskfeeList();
+        this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});
       },
       error: console.log,
     });

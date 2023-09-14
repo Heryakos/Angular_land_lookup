@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../employee.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-// import { error } from 'console';
 
 @Component({
   selector: 'app-lease-owned-status',
@@ -101,7 +100,14 @@ showSuccessMessage() {
       }
     )
 
-  }   
+  }  
+  openAddForm() {
+    this.button = 'Save';
+    this.form.reset({
+      id: randomNumber(1,999)
+    })
+    this.Status = null; 
+  } 
 onFormSubmit() {
     console.log('statu',this.form.get('status')?.value);
     if(this.Status==null||this.Status==undefined){  
@@ -110,20 +116,24 @@ onFormSubmit() {
 
    this._empService.leaseownedstatusadd(this.form.value).subscribe((res)=>{
     this.leaseownedstatuslist();
-    this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
+    this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Add successfully' });
+  },
+  (error) => {
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
   }
-  )
- //  ,error({ 
-  
- //  })
+);
    }else{
-     alert('youare not fill customerstatus');
+     alert('youare not fill lease owned status');
    }
       }else{
       this._empService.leaseownedstatusupdate(this.form.value).subscribe((res)=>{
       this.leaseownedstatuslist();
-        });
+    },
+    (error) => {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
     }
+  );
+}
 }
 
   leaseownedstatuslist() {
@@ -154,6 +164,7 @@ onFormSubmit() {
     this._empService.leaseownedstatusdelete(id).subscribe({
       next: (res) => {
         this.leaseownedstatuslist();
+        this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});
       },
       error: console.log,
     });
