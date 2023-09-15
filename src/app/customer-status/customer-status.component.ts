@@ -106,7 +106,7 @@ form: FormGroup = new FormGroup({
         openAddForm() {
           this.button = 'Save';
           this.form.reset({
-            id: 1
+            id: randomNumber(1,999),
           })
           this.customerStatus = null; 
         }
