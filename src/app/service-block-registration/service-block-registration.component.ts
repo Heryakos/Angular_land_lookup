@@ -30,8 +30,8 @@ showSuccessMessage() {
     'woreda_ID',
     'subCity',
     'blocked_No',
-    'start_Date_GC',
-    'end_Date_GC', 
+    'start_Date',
+    'end_Date', 
     'active_Remark',    
     'action'
   ];
@@ -57,8 +57,8 @@ showSuccessMessage() {
     woreda_ID: new FormControl(),
     subCity: new FormControl(),
     blocked_No: new FormControl(),
-    start_Date_GC: new FormControl(),
-    end_Date_GC: new FormControl(),
+    start_Date: new FormControl(),
+    end_Date: new FormControl(),
     is_Active: new FormControl(),
     active_Remark: new FormControl(),
     deactive_Remark: new FormControl(),
@@ -125,8 +125,8 @@ showSuccessMessage() {
         subCity:data.subCity,
         woreda_ID:data.woreda_ID,
         blocked_No: data.blocked_No,
-        start_Date_GC: data.start_Date_GC,
-        end_Date_GC: data.end_Date_GC,
+        start_Date: data.start_Date,
+        end_Date: data.end_Date,
         is_Active: data.is_Active,
         active_Remark: data.active_Remark,
         is_Deleted: data.is_Deleted,
@@ -136,32 +136,46 @@ showSuccessMessage() {
       }
     )
 
-  }   
-onFormSubmit() {
-    console.log('woredaid',this.form.get('woreda_ID')?.value);
-    if(this.woredaID==null||this.woredaID==undefined){  
-    if(this.form.get('woreda_ID')?.value!=null||this.form.get('woreda_ID')?.value!=undefined){
-   this._empService.serviceblockadd(this.form.value).subscribe((res)=>{
-    this.serviceblockList();
-    this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Add successfully' });
-  },
-  (error) => {
-    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
-  }
-);
-      }else{
-        alert('youare not fill service block registration');
-      }
-      }else{
-      this._empService.serviceblockupdate(this.form.value).subscribe((res)=>{
+  } 
+  save(){
+    this._empService.serviceblockadd(this.form.value).subscribe((res)=>{
       this.serviceblockList();
+      this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Add successfully' });
     },
     (error) => {
-      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
-    }
-  );
-}
-}
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
+    })
+    this.button = 'Save';
+      this.form.reset({
+        customer_Type_ID: randomNumber(1,999)
+      })
+      this.woredaID = null; 
+  }  
+// onFormSubmit() {
+//     console.log('woredaid',this.form.get('woreda_ID')?.value);
+//     if(this.woredaID==null||this.woredaID==undefined){  
+//     if(this.form.get('woreda_ID')?.value!=null||this.form.get('woreda_ID')?.value!=undefined){
+//    this._empService.serviceblockadd(this.form.value).subscribe((res)=>{
+//     this.serviceblockList();
+//     this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Add successfully' });
+//   },
+//   (error) => {
+//     this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
+//   }
+// );
+//       }else{
+//         alert('youare not fill service block registration');
+//       }
+//       }else{
+//       this._empService.serviceblockupdate(this.form.value).subscribe((res)=>{
+//       this.serviceblockList();
+//     },
+//     (error) => {
+//       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
+//     }
+//   );
+// }
+// }
 
   serviceblockList() {
     this._empService.serviceblockList().subscribe({
