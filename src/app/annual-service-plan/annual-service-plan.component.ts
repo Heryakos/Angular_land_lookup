@@ -30,8 +30,8 @@ showSuccessMessage() {
     'service_Name',
     'description',
     'budget_Year',
-    'start_Date_GC',
-    'end_Date_GC',
+    'start_Date',
+    'end_Date',
     'grand_Plan_Per_Year',
     'action',
   ];
@@ -48,8 +48,8 @@ showSuccessMessage() {
     service_Name: new FormControl(),
     description: new FormControl(),
     budget_Year: new FormControl(),
-    start_Date_GC: new FormControl(),
-    end_Date_GC: new FormControl(),
+    start_Date: new FormControl(),
+    end_Date: new FormControl(),
     grand_Plan_Per_Year: new FormControl(),
     accomplished: new FormControl(),
     income_Planed: new FormControl(),
@@ -90,7 +90,8 @@ showSuccessMessage() {
   ngOnInit(): void {
     this.annualplanList();
     this.form.patchValue({
-      planID: randomNumber(1,999),
+      planID: generateGuid(),
+      service_ID: generateGuid(),
       created_by: generateGuid(),
       updated_By: generateGuid(),
       deleted_By: generateGuid(),
@@ -107,8 +108,8 @@ showSuccessMessage() {
         service_Name: data.service_Name,
         description: data.description,
         budget_Year: data.budget_Year,
-        start_Date_GC: data.start_Date_GC,
-        end_Date_GC: data.end_Date_GC,
+        start_Date: data.start_Date,
+        end_Date: data.end_Date,
         grand_Plan_Per_Year: data.grand_Plan_Per_Year,
         accomplished: data.accomplished,
         income_Planed: data.income_Planed,
@@ -129,7 +130,8 @@ showSuccessMessage() {
   openAddForm() {
     this.button = 'Save';
     this.form.reset({
-      planID: randomNumber(1,999)
+      planID: generateGuid(),
+      service_ID: generateGuid(),
     })
     this.serviceName = null; 
   }
