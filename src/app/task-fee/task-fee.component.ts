@@ -82,6 +82,7 @@ showSuccessMessage() {
   ngOnInit(): void {
     this.taskfeeList();
     this.form.patchValue({
+      id: randomNumber(1,999),
       service_ID: generateGuid(),
       created_by: generateGuid(),
       updated_By: generateGuid(),
@@ -128,11 +129,13 @@ onFormSubmit() {
   }
 );
 } else {
-alert('You have not filled in the task fee');
-}
+   this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'You have not filled in the task fee' });
+  }
       }else{
       this._empService.taskfeeupdate(this.form.value).subscribe((res)=>{
       this.taskfeeList();
+      this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Updated successfully'});
+
     },
     (error) => {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });

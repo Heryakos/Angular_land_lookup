@@ -52,7 +52,12 @@
 
 <p-dialog header="List Of Users" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000" position="top"> 
      <form [formGroup]="form">
-   
+      
+      <div class="mb-3">
+        <label for="recipient-name" class="col-form-label">Service ID	</label>
+        <input type="text" class="form-control" placeholder="Service ID	" formControlName="service_ID" id="recipient-name">
+      </div>
+
       <div class="mb-3">
         <label for="recipient-name" class="col-form-label">Service Fee</label>
         <input type="text" class="form-control" placeholder="Service Fee" formControlName="service_fee1" id="recipient-name">

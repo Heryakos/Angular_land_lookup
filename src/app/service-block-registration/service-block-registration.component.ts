@@ -13,6 +13,7 @@ import { MessageService } from 'primeng/api';
 export class ServiceBlockRegistrationComponent implements OnInit {
   displayBasic:boolean=false;
   showSuccess: boolean = false;
+  public subCity: any;
   public woredaID: any;
   public button='save';
   // woredaID: any;
@@ -93,7 +94,8 @@ showSuccessMessage() {
     
   })
   ngOnInit(): void {
-    this.getWoredas()
+    this.getWoredas();
+    this.getSubCities();
     this.serviceblockList();
     this.form.patchValue({
       customer_Type_ID: randomNumber(1,999),
@@ -114,8 +116,16 @@ showSuccessMessage() {
       
     })
   }
+   getSubCities() {
+    this._empService.subCityList().subscribe((res) => {
+      this.subCity = res.procorganizationss;
+      // console.log('logggg',this.subCity);
+      
+    });
+  }
   openEditForm(data: any) {
     this.button='Update'
+    this.subCity=data
     this.woredaID=data
     this.form.patchValue(
       {

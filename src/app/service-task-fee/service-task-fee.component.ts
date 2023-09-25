@@ -14,7 +14,7 @@ import { MessageService } from 'primeng/api';
 export class ServiceTaskFeeComponent implements OnInit {
   displayBasic:boolean=false;
   showSuccess: boolean = false;
-  public customerType: any;
+  public serviceFee1: any;
   public button='save';
 
 showSuccessMessage() {
@@ -46,13 +46,13 @@ showSuccessMessage() {
     service_fee1: new FormControl(),
     assurance: new FormControl(),
     tember: new FormControl(),
+    deleted_By: new FormControl(),
     created_By: new FormControl(),
     updated_By:new FormControl(),
-    deleted_By: new FormControl(),
+    is_Deleted: new FormControl(new Date().toISOString().substr(0, 10)),
     created_Date: new FormControl(new Date().toISOString().substr(0, 10)),
     updated_Date: new FormControl(new Date().toISOString().substr(0, 10)),
     deleted_Date: new FormControl(new Date().toISOString().substr(0, 10)),
-    is_Deleted: new FormControl(new Date().toISOString().substr(0, 10)),
     // created_Date: new FormControl(new Date().toISOString().substr(0, 10)),
     // licence_type: new FormControl(),
     // file_no: new FormControl(),
@@ -79,7 +79,7 @@ showSuccessMessage() {
   ngOnInit(): void {
     this.servicefeeList();
     this.form.patchValue({
-      service_ID: randomNumber(1,999),
+      service_ID: generateGuid(),
       created_by: generateGuid(),
       updated_By: generateGuid(),
       deleted_By: generateGuid(),
@@ -88,7 +88,7 @@ showSuccessMessage() {
   }
   openEditForm(data: any) {
     this.button='Update'
-    this.customerType=data
+    this.serviceFee1=data
     this.form.patchValue(
       {
         service_ID: data.service_ID,
@@ -98,7 +98,7 @@ showSuccessMessage() {
         created_by: data.created_by,
         updated_By:data.updated_By,
         deleted_By: data.deleted_By,
-        has_Capital_Gain: data.has_Capital_Gain,
+        is_Deleted: data.is_Deleted,
         created_Date: data.created_Date,
         updated_Date: data.updated_Date,
         deleted_Date: data.deleted_Date,
@@ -109,15 +109,15 @@ showSuccessMessage() {
   openAddForm() {
     this.button = 'Save';
     this.form.reset({
-      service_ID: randomNumber(1,999)
+      service_ID: generateGuid( )
     })
-    this.customerType = null; 
+    this.serviceFee1 = null; 
   }  
 onFormSubmit() {
-    console.log('customertype',this.form.get('customer_Type')?.value);
-    if(this.customerType==null||this.customerType==undefined){  
-    if(this.form.get('customer_Type')?.value!=null||this.form.get('customer_Type')?.value!=undefined){
-   this._empService.customertypeadd(this.form.value).subscribe((res)=>{
+    console.log('servicefee',this.form.get('service_fee1')?.value);
+    if(this.serviceFee1==null||this.serviceFee1==undefined){  
+    if(this.form.get('service_fee1')?.value!=null||this.form.get('service_fee1')?.value!=undefined){
+   this._empService.servicefeeadd(this.form.value).subscribe((res)=>{
     this.servicefeeList();
     this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
   },
@@ -125,15 +125,16 @@ onFormSubmit() {
     this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
   }
 );
-   }else{
-     alert('youare not fill service task fee');
+   } else {
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'You have not filled in the Service Fee' });
    }
       }else{
-      this._empService.customertypeupdate(this.form.value).subscribe((res)=>{
+      this._empService.servicefeeupdate(this.form.value).subscribe((res)=>{
       this.servicefeeList();
+      this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Updated successfully'});
     },
     (error) => {
-      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to Update table' });
     }
   );
 }
