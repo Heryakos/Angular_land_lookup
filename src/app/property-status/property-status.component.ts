@@ -118,7 +118,7 @@ onFormSubmit() {
     console.log('propertystatus',this.form.get('property_Status')?.value);
     if(this.propertyStatus==null||this.propertyStatus==undefined){  
     if(this.form.get('property_Status')?.value!=null||this.form.get('property_Status')?.value!=undefined){
-   this._empService.customertypeadd(this.form.value).subscribe((res)=>{
+   this._empService.propertystatusadd(this.form.value).subscribe((res)=>{
     this.propertystatuslist();
     this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
   },
@@ -128,11 +128,14 @@ onFormSubmit() {
   }
 );
    }else{
-     alert('youare not fill customerstatus');
+     this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'You have not filled in the Proerty status' });
+
    }
       }else{
       this._empService.propertystatusupdate(this.form.value).subscribe((res)=>{
       this.propertystatuslist();
+      this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Updated successfully'});
+
         },
         (error) => {
           this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
@@ -152,8 +155,9 @@ onFormSubmit() {
   }
 
 
-  propertystatusdelete(id: number) {
-    this._empService.propertystatusdelete(id).subscribe({
+  propertystatusdelete(id: any) {
+    // console.log('iddddddd',id.p_Status_ID);
+    this._empService.propertystatusdelete(id.p_Status_ID).subscribe({
       next: (res) => {
         this.propertystatuslist();
         this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});

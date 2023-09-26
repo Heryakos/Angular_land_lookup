@@ -9,6 +9,10 @@ export class EmployeeService {
   woredaidlist() {
     throw new Error('Method not implemented.');
   }
+
+  subCitylist() {
+    throw new Error('Method not implemented.');
+  }
   constructor(private _http: HttpClient) { }
 //post, add
 addEmployee(data: any): Observable<any> {
@@ -51,6 +55,14 @@ serviceblockadd(data: any): Observable<any> {
   return this._http.post(' http://197.156.93.110/Xoka_land_API/api/Service_Block_Registration/procService_Block_Registration', data);
 }
 
+servicedetailadd(data: any): Observable<any> {
+  return this._http.post(' http://197.156.93.110/Xoka_land_API/api/Service_Detail/procService_Detail', data);
+}
+
+servicefeeadd(data: any): Observable<any> {
+  return this._http.post(' http://197.156.93.110/Xoka_land_API/api/Service_fee/procService_fee', data);
+}
+
 taskfeeadd(data: any): Observable<any> {
   return this._http.post(' http://197.156.93.110/Xoka_land_API/api/Task_Fee/procTask_Fee', data);
 }
@@ -65,6 +77,19 @@ woredaidadd(data: any): Observable<any> {
 
 annualplanadd(data: any): Observable<any> {
   return this._http.post(' http://197.156.93.110/Xoka_land_API/api/Service_Plan/procService_Plan', data);
+}
+
+propertystatusadd(data: any): Observable<any> {
+  return this._http.post(' http://197.156.93.110/Xoka_land_API/api/Property_StatusLookup/procProperty_StatusLookup', data);
+}
+
+propertytypeadd(data: any): Observable<any> {
+  return this._http.post(' http://197.156.93.110/Xoka_land_API/api/Property_Type_Lookup/procProperty_Type_Lookup', data);
+}
+
+
+suspensionadd(data: any): Observable<any> {
+  return this._http.post(' http://197.156.93.110/Xoka_land_API/api/Suspension_Reason_Lookup/procSuspension_Reason_Lookup', data);
 }
 
 countryadd(data: any): Observable<any> {
@@ -115,8 +140,20 @@ serviceblockupdate(data: any): Observable<any> {
   return this._http.put(` http://197.156.93.110/Xoka_land_API/api/Service_Block_Registration/procService_Block_Registration/`, data);
 }
 
+servicedetailupdate(data: any): Observable<any> {
+  return this._http.put(`http://197.156.93.110/Xoka_land_API/api/Service_Detail/procService_Detail/`, data);
+}
+
+servicefeeupdate(data: any): Observable<any> {
+  return this._http.put(`http://197.156.93.110/Xoka_land_API/api/Service_fee/procService_fee/`, data);
+}
+
 taskfeeupdate(data: any): Observable<any> {
   return this._http.put(` http://197.156.93.110/Xoka_land_API/api/Task_Fee/procTask_Fee/`, data);
+}
+
+propertytypeupdate(data: any): Observable<any> {
+  return this._http.put(` http://197.156.93.110/Xoka_land_API/api/Property_Type_Lookup/procProperty_Type_Lookup/`, data);
 }
 
 woredagroupupdate(data: any): Observable<any> {
@@ -129,6 +166,10 @@ woredaidupdate(data: any): Observable<any> {
 
 annualplanupdate(data: any): Observable<any> {
   return this._http.put(` http://197.156.93.110/Xoka_land_API/api/Service_Plan/procService_Plan`, data);
+}
+
+suspensionupdate(data: any): Observable<any> {
+  return this._http.put(` http://197.156.93.110/Xoka_land_API/api/Suspension_Reason_Lookup/procSuspension_Reason_Lookup`, data);
 }
 
 countryupdate(data: any): Observable<any> {
@@ -211,6 +252,10 @@ woredaidList(): Observable<any> {
   return this._http.get(' http://197.156.93.110/Xoka_land_API/api/Woreda_Lookup/procWoreda_Lookup');
 }
 
+subCityList(): Observable<any> {
+  return this._http.get(' http://197.156.93.110/Xoka_land_API/api/organizations/procorganizations');
+}
+
 measurementfeeList(): Observable<any> {
   return this._http.get(' http://197.156.93.110/Xoka_land_API/api/Measurement_Fee/procMeasurement_Fee');
 }
@@ -275,7 +320,7 @@ measurementfeedelete(id: number): Observable<any> {
   return this._http.delete(` http://197.156.93.110/Xoka_land_API/api/Measurement_Fee/procMeasurement_Fee/${id}`);
 }
 
-propertystatusdelete(id: number): Observable<any> {
+propertystatusdelete(id: number): Observable<any> {  
   return this._http.delete(` http://197.156.93.110/Xoka_land_API/api/Property_StatusLookup/procProperty_StatusLookup/${id}`);
 }
 

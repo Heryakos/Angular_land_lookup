@@ -153,6 +153,8 @@ alert('You have not filled in the annual service plan');
       }else{
       this._empService.annualplanupdate(this.form.value).subscribe((res)=>{
       this.annualplanList();
+      this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Updated successfully'});
+
     },
     (error) => {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
