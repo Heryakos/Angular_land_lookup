@@ -31,7 +31,6 @@ showSuccessMessage() {
     'property_Type',
     'fee',
     'action',
-    // 'dob',
   
   ];
   taskfee: any;
