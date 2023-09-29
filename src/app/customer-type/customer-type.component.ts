@@ -122,12 +122,14 @@ showSuccessMessage() {
             }
           );
         } else {
-          alert('You have not filled in the customer type');
+          this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'You have not filled in the customer type' });
+
         }
       } else {
         this._empService.customertypeupdate(this.form.value).subscribe(
           (res) => {
             this.customertypeupdatelist();
+            this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Updated successfully'});
           },
           (error) => {
             this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });

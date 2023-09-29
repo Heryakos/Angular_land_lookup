@@ -134,6 +134,8 @@ form: FormGroup = new FormGroup({
             this._empService.updateEmployee(this.form.value).subscribe((res)=>{
     
     this.getEmployeeList();
+    this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Updated successfully'});
+
   },
   (error) => {
     this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
