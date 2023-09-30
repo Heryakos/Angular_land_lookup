@@ -29,7 +29,6 @@ showSuccessMessage() {
     'lease_Type_ID',
     'lease_Type',
     'action',
-    // 'dob',
   
   ];
 
@@ -130,6 +129,8 @@ showSuccessMessage() {
       }else{
       this._empService.leasetypeupdate(this.form.value).subscribe((res)=>{
       this.leasetypeupdatelist();
+      this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Updated successfully'});
+
     },
     (error) => {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
