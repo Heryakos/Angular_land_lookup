@@ -29,7 +29,6 @@ showSuccessMessage() {
     'type_Of_Use_ID',
     'type_Of_Use',
     'action',
-    // 'dob',
   
   ];
   public plottype: any;
@@ -128,6 +127,8 @@ onFormSubmit() {
       }else{
       this._empService.plottypeofuseupdate(this.form.value).subscribe((res)=>{
       this.plottypeofuselist();
+      this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Updated successfully'});
+
     },
     (error) => {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });

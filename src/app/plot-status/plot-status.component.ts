@@ -29,7 +29,6 @@ showSuccessMessage() {
     'plot_Status_ID',
     'name',
     'action',
-    // 'dob',
   
   ];
   plotstatus: any;
@@ -126,6 +125,8 @@ showSuccessMessage() {
       }else{
       this._empService.plotstatusupdate(this.form.value).subscribe((res)=>{
       this.plotstatuslist();
+      this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Updated successfully'});
+
     },
     (error) => {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });

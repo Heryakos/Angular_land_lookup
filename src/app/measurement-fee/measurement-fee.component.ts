@@ -133,6 +133,8 @@ showSuccessMessage() {
       }else{
       this._empService.measurementfeeupdate(this.form.value).subscribe((res)=>{
       this.measurementfeeList();
+      this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Updated successfully'});
+
     },
     (error) => {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
