@@ -30,7 +30,6 @@ showSuccessMessage() {
     'expires_Days',
     'color',
     'action',
-    // 'dob',
   
   ];
   propertystatus: any;

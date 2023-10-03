@@ -29,7 +29,6 @@ showSuccessMessage() {
     'property_Type_ID',
     'property_Type',
     'action',
-    // 'dob',
   
   ];
 
@@ -112,7 +111,7 @@ onFormSubmit() {
     console.log('customertype',this.form.get('property_Type')?.value);
     if(this.propertyType==null||this.propertyType==undefined){  
     if(this.form.get('property_Type')?.value!=null||this.form.get('property_Type')?.value!=undefined){
-   this._empService.customertypeadd(this.form.value).subscribe((res)=>{
+   this._empService.propertytypeadd(this.form.value).subscribe((res)=>{
     this.propertytypelist();
     this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
   },
@@ -124,8 +123,10 @@ onFormSubmit() {
      alert('youare not fill property type');
    }
       }else{
-      this._empService.customertypeupdate(this.form.value).subscribe((res)=>{
+      this._empService.propertytypeupdate(this.form.value).subscribe((res)=>{
       this.propertytypelist();
+      this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Updated successfully'});
+
     },
     (error) => {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });

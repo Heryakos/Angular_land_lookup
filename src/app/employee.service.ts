@@ -6,6 +6,12 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class EmployeeService {
+  gettaskList(): Observable <any> {
+    throw new Error('Method not implemented.');
+  }
+  getservicess() {
+    throw new Error('Method not implemented.');
+  }
   woredaidlist() {
     throw new Error('Method not implemented.');
   }
@@ -234,6 +240,14 @@ taskfeeList(): Observable<any> {
 
 servicefeeList(): Observable<any> {
   return this._http.get(' http://197.156.93.110/Xoka_land_API/api/Service_fee/procService_fee');
+}
+
+servicessList(): Observable<any> {
+  return this._http.get('http://197.156.93.110/Xoka_land_API/api/services/procservices');
+}
+
+taskList(): Observable<any> {
+  return this._http.get('http://197.156.93.110/Xoka_land_API/api/tasks/proctasks');
 }
 
 annualplanList(): Observable<any> {
