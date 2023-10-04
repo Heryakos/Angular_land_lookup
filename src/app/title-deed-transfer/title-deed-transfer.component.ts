@@ -30,7 +30,6 @@ showSuccessMessage() {
     'transfer_ID',
     'type',
     'action',
-    // 'dob',
   
   ];
   type: any;
@@ -128,6 +127,8 @@ onFormSubmit() {
       }else{
       this._empService.transfertypeupdate(this.form.value).subscribe((res)=>{
       this.transfertypelist();
+      this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Updated successfully'});
+
     },
     (error) => {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });

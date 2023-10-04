@@ -4,14 +4,20 @@
   <div class="card">
     <div class="card-body">
       <div class="row">
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
           <div class="form-group">
             <label for="serviceID">Service ID</label>
             <input formControlName="service_ID" type="text" class="form-control" id="serviceID" placeholder="Service ID">
+          </div>  -->
+          <div class="mb-3">
+            <label for="serviceid">Service ID</label>
+            <select formControlName="service_ID" class="form-control" id="serviceid">
+              <option *ngFor="let service of service_ID" [value]="service.service_code">{{ service.description_local }}</option>
+            </select>
           </div>
         </div>
       </div>
-  </div>
+  <!-- </div> -->
 
 <p-table [value]="taskfee" [paginator]="true" [rows]="5" class="custom-table">
     
@@ -40,8 +46,8 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData>
-        <tr [pSelectableRow]="rowData">
-          <td >
+      <tr [pSelectableRow]="rowData">
+        <td >
             {{rowData.service_ID}}
          </td>
          <td >
@@ -60,7 +66,7 @@
                 <button type="button" class="btn btn-primary edit-button"  (click)="openEditForm(rowData);displayBasic=true">
                     <i class="pi pi-pencil"></i>
                 </button>
-                <button type="button" class="btn btn-danger delete-button" (click)="taskfeedelete(rowData.service_ID)">
+                <button type="button" class="btn btn-danger delete-button" (click)="taskfeedelete(rowData.id)">
                     <i class="pi pi-trash"></i> 
                 </button>
             </td>
@@ -71,13 +77,22 @@
 <p-dialog header="List Of Users" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000" position="top"> 
      <form [formGroup]="form">
    
+      <!-- <div class="mb-3">
+        <label for="serviceid">Service ID</label>
+        <select  formControlName="service_ID" class="form-control" id="serviceid">
+          <option  *ngFor="let serviceid of service_ID" [value]="serviceid.service_code">{{ serviceid.description_local
+          }}</option>
+        </select>
+      </div> -->
       <div class="mb-3">
-        <label for="recipient-name" class="col-form-label">Service ID	</label>
-        <input type="text" class="form-control" placeholder="Service ID	" formControlName="service_ID" id="recipient-name">
+        <label for="taskid">Task ID</label>
+        <select formControlName="task_ID" class="form-control" id="taskid">
+          <option *ngFor="let task of task_ID" [value]="task.task_code">{{ task.description_local }}</option>
+        </select>
       </div>
       <div class="mb-3">
-        <label for="recipient-name" class="col-form-label">Task ID</label>
-        <input type="text" class="form-control" placeholder="Task ID" formControlName="task_ID" id="recipient-name">
+        <label for="recipient-name" class="col-form-label">Task Name</label>
+        <input type="text" class="form-control" placeholder="Task Name" formControlName="task_Name" id="recipient-name">
       </div>
       <div class="mb-3">
         <label for="recipient-name" class="col-form-label">Customer Type</label>

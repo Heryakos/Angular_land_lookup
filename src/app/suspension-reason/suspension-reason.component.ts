@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../employee.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-// import { error } from 'console';
 
 @Component({
   selector: 'app-suspension-reason',
@@ -14,7 +13,7 @@ import { MessageService } from 'primeng/api';
 export class SuspensionReasonComponent implements OnInit {
   displayBasic:boolean=false;
   showSuccess: boolean = false;
-  public customerType: any;
+  public suspensionReason: any;
   public button='save';
 
 showSuccessMessage() {
@@ -28,9 +27,7 @@ showSuccessMessage() {
   displayedColumns: string[] = [
     'id',
     'suspension_Reason',
-    'action',
-    // 'dob',
-  
+    'action',  
   ];
   suspension: any;
 
@@ -85,7 +82,7 @@ showSuccessMessage() {
   }
   openEditForm(data: any) {
     this.button='Update'
-    this.customerType=data
+    this.suspensionReason=data
     this.form.patchValue(
       {
         id:data.id,
@@ -106,13 +103,13 @@ showSuccessMessage() {
     this.form.reset({
       id: randomNumber(1,999)
     })
-    this.customerType = null; 
+    this.suspensionReason = null; 
   } 
 onFormSubmit() {
-    console.log('customertype',this.form.get('customer_Type')?.value);
-    if(this.customerType==null||this.customerType==undefined){  
-    if(this.form.get('customer_Type')?.value!=null||this.form.get('customer_Type')?.value!=undefined){
-   this._empService.customertypeadd(this.form.value).subscribe((res)=>{
+    console.log('suspensionreason',this.form.get('suspension_Reason')?.value);
+    if(this.suspensionReason==null||this.suspensionReason==undefined){  
+    if(this.form.get('suspension_Reason')?.value!=null||this.form.get('suspension_Reason')?.value!=undefined){
+   this._empService.suspensionadd(this.form.value).subscribe((res)=>{
     this.suspensionList();
     this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
   },
@@ -121,10 +118,10 @@ onFormSubmit() {
   }
 );
    }else{
-     alert('youare not fill suspension reason');
-   }
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'You have not filled in the suspension reason' });
+  }
       }else{
-      this._empService.customertypeupdate(this.form.value).subscribe((res)=>{
+      this._empService.suspensionupdate(this.form.value).subscribe((res)=>{
       this.suspensionList();
     },
     (error) => {

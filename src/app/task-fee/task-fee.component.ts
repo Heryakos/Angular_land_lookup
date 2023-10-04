@@ -13,8 +13,12 @@ import { MessageService } from 'primeng/api';
 export class TaskFeeComponent implements OnInit {
   displayBasic:boolean=false;
   showSuccess: boolean = false;
+  public task_ID: any;
+  public service_ID: any;
   public taskName: any;
   public button='save';
+  task_IDd: any;
+  
 
 showSuccessMessage() {
   this.showSuccess = true;
@@ -25,6 +29,7 @@ showSuccessMessage() {
 }
   data: any;
   displayedColumns: string[] = [
+    'task_code',
     'service_ID',
     'task_ID',
     'task_Name',
@@ -44,6 +49,7 @@ showSuccessMessage() {
   form: FormGroup = new FormGroup({
     id: new FormControl(),
     service_ID: new FormControl(),
+    task_code: new FormControl(),
     task_ID: new FormControl(),
     task_Name: new FormControl(),
     property_Type: new FormControl(),
@@ -79,24 +85,44 @@ showSuccessMessage() {
     
   })
   ngOnInit(): void {
+    this.getservicess();
     this.taskfeeList();
+    this.gettaskList();
     this.form.patchValue({
-      id: randomNumber(1,999),
-      service_ID: generateGuid(),
+      id: generateGuid(),
+      task_ID:generateGuid(),
+      task_code:generateGuid(),
+      // service_ID: generateGuid(),
       created_by: generateGuid(),
       updated_By: generateGuid(),
       deleted_By: generateGuid(),
       is_Deleted:true
     })
   }
+  getservicess() {
+    this._empService.servicessList().subscribe((res:any) => {
+      this.service_ID = res.procservicess;
+      // console.log('service_ID',this.service_ID);  
+    });
+  }
 
+  gettaskList() {
+    this._empService.taskList().subscribe((res:any) => {
+      // console.log('task_ID',res);  
+      this.task_ID = res.proctaskss;
+      // console.log('Response:', this.task_ID );
+    });
+  }
   openEditForm(data: any) {
     this.button='Update'
+    this.service_ID=data
+    this.task_ID=data
     this.taskName=data
     this.form.patchValue(
       {
         service_ID:data.service_ID,
         task_Name: data.task_Name,
+        task_ID: data.task_ID,
         created_by: data.created_by,
         updated_By:data.updated_By,
         deleted_By: data.deleted_By,
@@ -110,16 +136,15 @@ showSuccessMessage() {
   }  
   openAddForm() {
     this.button = 'Save';
-    this.form.reset({
-      service_ID: generateGuid()
-    })
+    // this.form.reset({
+    //   id:generateGuid(),
+      // service_ID: generateGuid(),
+    //   task_ID: generateGuid(),
+    // })
     this.taskName = null; 
   } 
 onFormSubmit() {
-    console.log('taskname',this.form.get('task_Name')?.value);
-    if(this.taskName==null||this.taskName==undefined){  
-    if(this.form.get('task_Name')?.value!=null||this.form.get('task_Name')?.value!=undefined){
-   this._empService.taskfeeadd(this.form.value).subscribe((res)=>{
+  this._empService.taskfeeadd(this.form.value).subscribe((res)=>{
     this.taskfeeList();
     this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Add successfully' });
   },
@@ -127,20 +152,24 @@ onFormSubmit() {
     this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
   }
 );
-} else {
-   this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'You have not filled in the task fee' });
-  }
-      }else{
-      this._empService.taskfeeupdate(this.form.value).subscribe((res)=>{
-      this.taskfeeList();
-      this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Updated successfully'});
+//     console.log('taskname',this.form.get('task_Name')?.value);
+//     if(this.taskName==null||this.taskName==undefined){  
+//     if(this.form.get('task_Name')?.value!=null||this.form.get('task_Name')?.value!=undefined){
+ 
+// } else {
+//    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'You have not filled in the task fee' });
+//   }
+//       }else{
+//       this._empService.taskfeeupdate(this.form.value).subscribe((res)=>{
+//       this.taskfeeList();
+//       this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Updated successfully'});
 
-    },
-    (error) => {
-      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
-    }
-  );
-    }
+//     },
+//     (error) => {
+//       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
+//     }
+//   );
+//     }
 }
   taskfeeList() {
     this._empService.taskfeeList().subscribe({
