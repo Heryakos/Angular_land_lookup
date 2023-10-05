@@ -13,8 +13,11 @@ import { MessageService } from 'primeng/api';
 export class WoredaGroupComponent implements OnInit {
   displayBasic:boolean=false;
   showSuccess: boolean = false;
-  public sdPID: any;
+  public subCity: any;
+  // public woredaName: any;
+  public woredaID: any;
   public button='save';
+  woreda: any;
 
 showSuccessMessage() {
   this.showSuccess = true;
@@ -26,10 +29,10 @@ showSuccessMessage() {
   data: any;
   displayedColumns: string[] = [
     'id',
-    'sdP_ID',
+    'woreda_ID',
+    'subCity',
     'group_ID',
     'action',
-    // 'dob',
   
   ];
   woredagroup: any;
@@ -44,6 +47,7 @@ showSuccessMessage() {
     id: new FormControl(),
     sdP_ID: new FormControl(),
     woreda_ID: new FormControl(),
+    subCity: new FormControl(),
     group_ID: new FormControl(),
     created_By: new FormControl(),
     updated_By:new FormControl(),
@@ -76,6 +80,8 @@ showSuccessMessage() {
     
   })
   ngOnInit(): void {
+    this.getWoredas();
+    this.getSubCities();
     this.woredagrouplist();
     this.form.patchValue({
       id: randomNumber(1,999),
@@ -85,18 +91,29 @@ showSuccessMessage() {
       is_Deleted:true
     })
   }
+  getWoredas(){
+    this._empService.woredaidList().subscribe((res)=>{
+      this.woreda=res.procWoreda_Lookups
+      // console.log('Worda',this.woreda);
+      
+    })
+  }
+  getSubCities() {
+    this._empService.subCityList().subscribe((res) => {
+      this.subCity = res.procorganizationss;
+    });
+  }
 
   openEditForm(data: any) {
     this.button='Update'
-    this.sdPID=data
+    this.subCity=data
+    this.woredaID=data
     this.form.patchValue(
       {
         id:data.id,
         sdP_ID: data.sdP_ID,
         woreda_ID: data.woreda_ID,
         group_ID: data.group_ID,
-        address: data.address,
-        subCity: data.subCity,
         created_by: data.created_by,
         updated_By:data.updated_By,
         deleted_By: data.deleted_By,
@@ -110,15 +127,15 @@ showSuccessMessage() {
   }   
   openAddForm() {
     this.button = 'Save';
-    this.form.reset({
-      id: randomNumber(1,999)
-    })
-    this.sdPID = null; 
+    // this.form.reset({
+    //   id: randomNumber(1,999)
+    // })
+    // this.woredaID = null; 
   }
 onFormSubmit() {
-    console.log('sdPid',this.form.get('sdP_ID')?.value);
-    if(this.sdPID==null||this.sdPID==undefined){  
-    if(this.form.get('sdP_ID')?.value!=null||this.form.get('sdP_ID')?.value!=undefined){
+    console.log('woredaid',this.form.get('woreda_ID')?.value);
+    if(this.woredaID==null||this.woredaID==undefined){  
+    if(this.form.get('woreda_ID')?.value!=null||this.form.get('woreda_ID')?.value!=undefined){
    this._empService.woredagroupadd(this.form.value).subscribe((res)=>{
     this.woredagrouplist();
     this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
@@ -128,11 +145,13 @@ onFormSubmit() {
   }
 );
    }else{
-     alert('youare not fill woreda group');
+     this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'You have not filled in the woreda group' });
    }
       }else{
       this._empService.woredagroupupdate(this.form.value).subscribe((res)=>{
       this.woredagrouplist();
+      this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Updated successfully'});
+
     },
     (error) => {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });

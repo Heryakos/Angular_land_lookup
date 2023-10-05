@@ -1,6 +1,18 @@
 <p-toast position="bottom-right" [showTransformOptions]="'translateX(100%)'"></p-toast>
 <p style="background: #84b4f1;color: black;">List of Woredas in Sub Cities</p>
-
+<form [formGroup]="form" class="form-container">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="subcity">Sub City</label>
+            <select formControlName="subCity" class="form-control" id="subcity">
+              <option *ngFor="let subcity of subCity" [value]="subcity.organization_code">{{ subcity.name_local}}</option>
+            </select>
+          </div>
+        </div>
+  </div>
 <p-table [value]="woredaid" [paginator]="true" [rows]="5" class="custom-table">
     
     <ng-template pTemplate="header">
@@ -52,8 +64,10 @@
         <input type="text" class="form-control" placeholder="ID" formControlName="woreda_ID" id="recipient-name">
       </div>
       <div class="mb-3">
-        <label for="recipient-name" class="col-form-label">woreda_Name</label>
-        <input type="text" class="form-control" placeholder="woreda_Name" formControlName="woreda_Name" id="recipient-name">
+        <label for="woreda">woreda_ID</label>
+        <select formControlName="woreda_ID" class="form-control" id="woreda">
+          <option *ngFor="let woreda of wored" [value]="woreda.woreda_ID">{{woreda.woreda_ID}}</option>
+        </select>
       </div>
       <div class="mb-3">
         <label for="recipient-name" class="col-form-label">Address</label>

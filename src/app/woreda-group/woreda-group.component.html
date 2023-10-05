@@ -1,6 +1,18 @@
 <p-toast position="bottom-right" [showTransformOptions]="'translateX(100%)'"></p-toast>
 <p style="background: #84b4f1;color: black;">Technical Team Grouping with Woredas</p>
-
+<form [formGroup]="form" class="form-container">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="subcity">Sub City</label>
+              <select formControlName="subCity" class="form-control" id="subcity">
+              <option *ngFor="let subcity of subCity" [value]="subcity.organization_code">{{ subcity.name_local}}</option>
+            </select>
+          </div>
+        </div>
+  </div>
 <p-table [value]="woredagroup" [paginator]="true" [rows]="5" class="custom-table">
     
     <ng-template pTemplate="header">
@@ -27,7 +39,7 @@
             {{rowData.id}}
          </td>
          <td >
-           {{rowData.sdP_ID}}
+           {{rowData.woreda_ID}}
          </td>
          <td >
            {{rowData.group_ID}}
@@ -47,9 +59,11 @@
 <p-dialog header="List Of Users" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000" position="top"> 
      <form [formGroup]="form">
       <div class="mb-3">
-        <label for="recipient-name" class="col-form-label">sdP_ID</label>
-        <input type="text" class="form-control" placeholder="sdP_ID" formControlName="sdP_ID" id="recipient-name">
-      </div>
+              <label for="woreda">woreda_ID</label>
+              <select formControlName="woreda_ID" class="form-control" id="woreda">
+                <option *ngFor="let woreda of woreda" [value]="woreda.woreda_ID">{{woreda.woreda_ID}}</option>
+              </select>
+            </div>
       <div class="mb-3">
         <label for="recipient-name" class="col-form-label">group_ID</label>
         <input type="text" class="form-control" placeholder="group_ID" formControlName="group_ID" id="recipient-name">
