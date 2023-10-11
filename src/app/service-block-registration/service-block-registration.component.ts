@@ -16,7 +16,6 @@ export class ServiceBlockRegistrationComponent implements OnInit {
   public subCity: any;
   public woredaID: any;
   public button='save';
-  // woredaID: any;
   is_Active = false;
 
 showSuccessMessage() {
@@ -112,7 +111,7 @@ showSuccessMessage() {
   getWoredas(){
     this._empService.woredaidList().subscribe((res)=>{
       this.woredaID=res.procWoreda_Lookups
-      // console.log('woredass',this.woredas);
+      console.log('woredass',this.woredaID);
       
     })
   }
