@@ -143,34 +143,15 @@ showSuccessMessage() {
     // })
     this.taskName = null; 
   } 
-  onFormSubmit() {
-    const feeValue = this.form.get('fee')?.value;
-    if (feeValue && isNaN(feeValue)) {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error Message',
-        detail: 'Fee must be a numeric value',
-      });
-      return;
-    }
-  
-    this._empService.taskfeeadd(this.form.value).subscribe(
-      (res) => {
-        this.taskfeeList();
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success Message',
-          detail: 'Table added successfully',
-        });
-      },
-      (error) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error Message',
-          detail: 'Failed to add table',
-        });
-      }
-    );
+onFormSubmit() {
+  this._empService.taskfeeadd(this.form.value).subscribe((res)=>{
+    this.taskfeeList();
+    this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Add successfully' });
+  },
+  (error) => {
+    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
+  }
+);
 //     console.log('taskname',this.form.get('task_Name')?.value);
 //     if(this.taskName==null||this.taskName==undefined){  
 //     if(this.form.get('task_Name')?.value!=null||this.form.get('task_Name')?.value!=undefined){

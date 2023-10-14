@@ -100,7 +100,7 @@
       </div>
       <div class="mb-3">
         <label for="recipient-name" class="col-form-label">Fee</label>
-        <input type="text" class="form-control" placeholder="Fee" formControlName="fee" id="recipient-name">
+        <input  onkeypress='return event.charCode >= 48 && event.charCode <= 57' type="text" class="form-control" placeholder="Fee" formControlName="fee" id="recipient-name">
       </div>
   </form>
 
