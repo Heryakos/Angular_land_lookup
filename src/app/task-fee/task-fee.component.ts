@@ -18,6 +18,7 @@ export class TaskFeeComponent implements OnInit {
   public taskName: any;
   public button='save';
   task_IDd: any;
+  taskList: any;
   
 
 showSuccessMessage() {
@@ -143,6 +144,16 @@ showSuccessMessage() {
     // })
     this.taskName = null; 
   } 
+  passdata(data:any){
+    console.log('dataa',data);
+    
+    this._empService.getTasks(data).subscribe((ress:any)=>
+      {
+        this.taskList=ress
+        console.log('taskresponsess',this.taskList);
+        
+      })
+  }
 onFormSubmit() {
   this._empService.taskfeeadd(this.form.value).subscribe((res)=>{
     this.taskfeeList();

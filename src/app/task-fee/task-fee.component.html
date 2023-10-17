@@ -11,8 +11,9 @@
           </div>  -->
           <div class="mb-3">
             <label for="serviceid">Service ID</label>
-            <select formControlName="service_ID" class="form-control" id="serviceid">
-              <option *ngFor="let service of service_ID" [value]="service.service_code">{{ service.description_local }}</option>
+            <select #serviceidselecter formControlName="service_ID" class="form-control" id="serviceid" (change)="passdata(serviceidselecter.value)"
+            >
+              <option *ngFor="let service of service_ID" [value]="service.service_code">{{ service.description_en }}</option>
             </select>
           </div>
         </div>
@@ -87,7 +88,7 @@
       <div class="mb-3">
         <label for="taskid">Task ID</label>
         <select formControlName="task_ID" class="form-control" id="taskid">
-          <option *ngFor="let task of task_ID" [value]="task.task_code">{{ task.description_local }}</option>
+          <option *ngFor="let task of taskList" [value]="task.task_code">{{ task.description_local }}</option>
         </select>
       </div>
       <div class="mb-3">
