@@ -7,12 +7,12 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="subcity">Sub City</label>
-            <select formControlName="subCity" class="form-control" id="subcity">
-              <option *ngFor="let subcity of subCity" [value]="subcity.organization_code">{{ subcity.name_local}}</option>
+            <select formControlName="subCity" class="form-control" id="subcity" #subCitySelect (change)="isDropdownSelected = !!subCitySelect.value">
+              <option *ngFor="let subcity of subCity" [value]="subcity.organization_code">{{ subcity.name_local }}</option>
             </select>
           </div>
         </div>
-  </div>
+      </div>
 <p-table [value]="woredaid" [paginator]="true" [rows]="5" class="custom-table">
     
     <ng-template pTemplate="header">
@@ -27,9 +27,9 @@
             Address
           </th>
             <th>
-              <button type="button" class="btn btn-primary" (click)="openAddForm();displayBasic=true">
+              <button type="button" class="btn btn-primary" [disabled]="!isDropdownSelected" (click)="openAddForm(); displayBasic=true">
                 <i class="pi pi-plus"></i> Add New
-            </button>
+              </button>
            </th>
         </tr>
     </ng-template>
@@ -48,9 +48,9 @@
                 <button type="button" class="btn btn-primary edit-button"  (click)="openEditForm(rowData);displayBasic=true">
                     <i class="pi pi-pencil"></i>
                 </button>
-                <button type="button" class="btn btn-danger delete-button" (click)="woredaiddelete(rowData.woreda_ID)">
+                <!-- <button type="button" class="btn btn-danger delete-button" (click)="woredaiddelete(rowData.woreda_ID)">
                     <i class="pi pi-trash"></i> 
-                </button>
+                </button> -->
             </td>
         </tr>
     </ng-template>

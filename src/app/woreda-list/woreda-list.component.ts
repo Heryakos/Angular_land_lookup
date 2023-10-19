@@ -13,6 +13,7 @@ import { MessageService } from 'primeng/api';
 export class WoredaListComponent implements OnInit {
   displayBasic:boolean=false;
   showSuccess: boolean = false;
+  public isDropdownSelected: boolean = false;
   public subCity: any;
   public woredaName: any;
   public woredaID: any;
@@ -90,6 +91,9 @@ showSuccessMessage() {
       is_Deleted:true
     })
   }
+  // onDropdownChange(selectedValue: any) {
+  //   this.isDropdownSelected = !!selectedValue;
+  // }
   getWoredas(){
     this._empService.woredaidList().subscribe((res)=>{
       this.wored=res.procWoreda_Lookups
