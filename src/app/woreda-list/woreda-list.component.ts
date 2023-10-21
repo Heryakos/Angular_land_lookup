@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../employee.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+// import { log } from 'console';
 
 @Component({
   selector: 'app-woreda-list',
@@ -19,6 +20,8 @@ export class WoredaListComponent implements OnInit {
   public woredaID: any;
   public button='save';
   wored: any;
+  subData: any;
+  woredasss: any;
 
 showSuccessMessage() {
   this.showSuccess = true;
@@ -95,11 +98,20 @@ showSuccessMessage() {
   //   this.isDropdownSelected = !!selectedValue;
   // }
   getWoredas(){
-    this._empService.woredaidList().subscribe((res)=>{
+    this._empService.woredaidList().subscribe((res:any)=>{
       this.wored=res.procWoreda_Lookups
-      // console.log('Worda',this.woreda);
+      console.log('Worda',this.wored);
+      this.wored=this.wored.filter((value:any)=>value.subCity=this.subData)
       
     })
+  }
+  passdata(data:any){
+// console.log('passsdata',data);
+  this.subData=data
+  this.woredasss=this.woredaid.filter((value:any)=>value.subCity==data)
+// console.log('this.woredasss',this.woredasss);
+
+
   }
   getSubCities() {
     this._empService.subCityList().subscribe((res) => {
@@ -162,9 +174,10 @@ onFormSubmit() {
 }
   woredaidList() {
     this._empService.woredaidList().subscribe({
-      next: (res) => {
+      next: (res:any) => {
         this.woredaid=res.procWoreda_Lookups
-        console.log('woredaid',res.procWoreda_Lookups);
+        // this.woredaid=this.woredaid.filter((value:any)=>value.subCity==this.subData)
+        console.log('woredaid', this.woredaid);
       },
       error: console.log,
     });

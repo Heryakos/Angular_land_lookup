@@ -7,81 +7,65 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="subcity">Sub City</label>
-            <select formControlName="subCity" class="form-control" id="subcity" #subCitySelect (change)="isDropdownSelected = !!subCitySelect.value">
+            <select formControlName="subCity" class="form-control" id="subcity" #subCitySelect (change)="passdata(subCitySelect.value);isDropdownSelected = !!subCitySelect.value">
               <option *ngFor="let subcity of subCity" [value]="subcity.organization_code">{{ subcity.name_local }}</option>
             </select>
           </div>
         </div>
       </div>
-<p-table [value]="woredaid" [paginator]="true" [rows]="5" class="custom-table">
-    
-    <ng-template pTemplate="header">
-        <tr>
-          <th >
-            ID
-          </th>
-          <th >
-            Woreda Name
-          </th>
-          <th>
-            Address
-          </th>
-            <th>
-              <button type="button" class="btn btn-primary" [disabled]="!isDropdownSelected" (click)="openAddForm(); displayBasic=true">
-                <i class="pi pi-plus"></i> Add New
-              </button>
-           </th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData>
-        <tr [pSelectableRow]="rowData">
-          <td >
-            {{rowData.woreda_ID}}
-         </td>
-         <td >
-           {{rowData.woreda_Name}}
-         </td>
-         <td >
-          {{rowData.address}}
-        </td>
-            <td>
-                <button type="button" class="btn btn-primary edit-button"  (click)="openEditForm(rowData);displayBasic=true">
-                    <i class="pi pi-pencil"></i>
+
+      <div *ngIf="isDropdownSelected">
+        <p-table [value]="woredasss" [paginator]="true" [rows]="5" class="custom-table">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>ID</th>
+              <th>Woreda Name</th>
+              <th>Address</th>
+              <th>
+                <button type="button" class="btn btn-primary" (click)="openAddForm(); displayBasic=true">
+                  <i class="pi pi-plus"></i> Add New
                 </button>
-                <!-- <button type="button" class="btn btn-danger delete-button" (click)="woredaiddelete(rowData.woreda_ID)">
-                    <i class="pi pi-trash"></i> 
-                </button> -->
-            </td>
-        </tr>
-    </ng-template>
-</p-table>
-
-<p-dialog header="List Of Users" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000" position="top"> 
-     <form [formGroup]="form">
-   
-      <div class="mb-3">
-        <label for="recipient-name" class="col-form-label">ID</label>
-        <input type="text" class="form-control" placeholder="ID" formControlName="woreda_ID" id="recipient-name">
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData>
+            <tr [pSelectableRow]="rowData">
+              <td>{{ rowData.woreda_ID }}</td>
+              <td>{{ rowData.woreda_Name }}</td>
+              <td>{{ rowData.address }}</td>
+              <td>
+                <button type="button" class="btn btn-primary edit-button" (click)="openEditForm(rowData); displayBasic=true">
+                  <i class="pi pi-pencil"></i>
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
       </div>
-      <div class="mb-3">
-        <label for="woreda">woreda_ID</label>
-        <select formControlName="woreda_ID" class="form-control" id="woreda">
-          <option *ngFor="let woreda of wored" [value]="woreda.woreda_ID">{{woreda.woreda_ID}}</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="recipient-name" class="col-form-label">Address</label>
-        <input type="text" class="form-control" placeholder="Address" formControlName="address" id="recipient-name">
-      </div>
-  </form>
 
-<p-footer>
-  <button type="button"  (click)="displayBasic=false"  class="btn btn-danger">close</button>
-  <button type="button"  class="btn btn-secondary" (click)="displayBasic=false; onFormSubmit();" > {{button}}</button>
-</p-footer>
-</p-dialog>
+      <p-dialog header="List Of Users" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000" position="top">
+        <form [formGroup]="form">
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">ID</label>
+            <input type="text" class="form-control" placeholder="ID" formControlName="woreda_ID" id="recipient-name">
+          </div>
+          <div class="mb-3">
+            <label for="woreda">Woreda ID</label>
+            <select formControlName="woreda_ID" class="form-control" id="woreda">
+              <option *ngFor="let woreda of wored" [value]="woreda.woreda_ID">{{ woreda.woreda_ID }}</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Address</label>
+            <input type="text" class="form-control" placeholder="Address" formControlName="address" id="recipient-name">
+          </div>
+        </form>
 
-    
-
-
-
+        <p-footer>
+          <button type="button" (click)="displayBasic=false" class="btn btn-danger">Close</button>
+          <button type="button" class="btn btn-secondary" (click)="displayBasic=false; onFormSubmit();">{{ button }}</button>
+        </p-footer>
+      </p-dialog>
+    </div>
+  </div>
+</form>
