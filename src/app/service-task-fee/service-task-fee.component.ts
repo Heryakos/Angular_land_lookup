@@ -16,6 +16,7 @@ export class ServiceTaskFeeComponent implements OnInit {
   showSuccess: boolean = false;
   public serviceFee1: any;
   public button='save';
+  public service_ID: any;
 
 showSuccessMessage() {
   this.showSuccess = true;
@@ -78,16 +79,24 @@ showSuccessMessage() {
   })
   ngOnInit(): void {
     this.servicefeeList();
+    this.getservicess();
     this.form.patchValue({
-      service_ID: generateGuid(),
+      // service_ID: generateGuid(),
       created_by: generateGuid(),
       updated_By: generateGuid(),
       deleted_By: generateGuid(),
       is_Deleted:true
     })
   }
+  getservicess() {
+    this._empService.servicessList().subscribe((res:any) => {
+      this.service_ID = res.procservicess;
+      // console.log('service_ID',this.service_ID);  
+    });
+  }
   openEditForm(data: any) {
     this.button='Update'
+    this.service_ID=data
     this.serviceFee1=data
     this.form.patchValue(
       {
@@ -106,10 +115,13 @@ showSuccessMessage() {
     )
 
   } 
+  passdata(value: any) {
+    console.log('Selected value:', value);
+  }
   openAddForm() {
     this.button = 'Save';
     this.form.reset({
-      service_ID: generateGuid( )
+      // service_ID: generateGuid( )
     })
     this.serviceFee1 = null; 
   }  
@@ -142,8 +154,8 @@ onFormSubmit() {
   servicefeeList() {
     this._empService.servicefeeList().subscribe({
       next: (res) => {
-        this.servicefee=res.procService_fees
-        console.log('servicefee',res.procService_fees);
+        this.servicefee=res
+        console.log('servicefee',res);
       },
       error: console.log,
     });
