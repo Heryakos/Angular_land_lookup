@@ -4,24 +4,17 @@
   <div class="card">
     <div class="card-body">
       <div class="row">
-        <!-- <div class="col-md-6">
-          <div class="form-group">
-            <label for="serviceID">Service ID</label>
-            <input formControlName="service_ID" type="text" class="form-control" id="serviceID" placeholder="Service ID">
-          </div>  -->
-          <div class="mb-3">
-            <label for="serviceid">Service ID</label>
-            <select #serviceidselecter formControlName="service_ID" class="form-control" id="serviceid" (change)="passdata(serviceidselecter.value)"
-            >
-              <option *ngFor="let service of service_ID" [value]="service.service_code">{{ service.description_en }}</option>
-            </select>
-          </div>
+        <div class="mb-3">
+          <label for="serviceid">Service ID</label>
+          <select #serviceidselecter formControlName="service_ID" class="form-control" id="serviceid" (change)="onServiceIDChange(serviceidselecter.value)">
+            <option *ngFor="let service of service_ID" [value]="service.service_code">{{ service.description_en }}</option>
+          </select>
+        </div>
         </div>
       </div>
-  <!-- </div> -->
 
-<p-table [value]="taskfee" [paginator]="true" [rows]="5" class="custom-table">
-    
+      <div *ngIf="isDropdownSelected">
+      <p-table [value]="taskfee" [paginator]="true" [rows]="5" class="custom-table">
     <ng-template pTemplate="header">
         <tr>
           <th >
@@ -73,22 +66,15 @@
             </td>
         </tr>
     </ng-template>
-</p-table>
+  </p-table>
+</div>
 
 <p-dialog header="List Of Users" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000" position="top"> 
      <form [formGroup]="form">
-   
-      <!-- <div class="mb-3">
-        <label for="serviceid">Service ID</label>
-        <select  formControlName="service_ID" class="form-control" id="serviceid">
-          <option  *ngFor="let serviceid of service_ID" [value]="serviceid.service_code">{{ serviceid.description_local
-          }}</option>
-        </select>
-      </div> -->
       <div class="mb-3">
         <label for="taskid">Task ID</label>
         <select formControlName="task_ID" class="form-control" id="taskid">
-          <option *ngFor="let task of taskList" [value]="task.task_code">{{ task.description_local }}</option>
+          <option *ngFor="let task of taskList" [value]="task.task_code">{{ task.description_en }}</option>
         </select>
       </div>
       <div class="mb-3">
