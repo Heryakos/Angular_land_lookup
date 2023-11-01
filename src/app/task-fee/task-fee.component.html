@@ -14,7 +14,7 @@
       </div>
 
       <div *ngIf="isDropdownSelected">
-      <p-table [value]="taskfee" [paginator]="true" [rows]="5" class="custom-table">
+      <p-table [value]="taskfee1" [paginator]="true" [rows]="5" class="custom-table">
     <ng-template pTemplate="header">
         <tr>
           <th >
@@ -73,7 +73,7 @@
      <form [formGroup]="form">
       <div class="mb-3">
         <label for="taskid">Task ID</label>
-        <select formControlName="task_ID" class="form-control" id="taskid">
+        <select #taskName (change)="pasTask(taskName.value)" formControlName="task_ID" class="form-control" id="taskid">
           <option *ngFor="let task of taskList" [value]="task.task_code">{{ task.description_en }}</option>
         </select>
       </div>
@@ -83,7 +83,7 @@
       </div>
       <div class="mb-3">
         <label for="recipient-name" class="col-form-label">Customer Type</label>
-        <input type="text" class="form-control" placeholder="Customer Type" formControlName="property_Type" id="recipient-name">
+        <input type="number" class="form-control" placeholder="Customer Type" formControlName="property_Type" id="recipient-name">
       </div>
       <div class="mb-3">
         <label for="recipient-name" class="col-form-label">Fee</label>

@@ -20,6 +20,9 @@ export class TaskFeeComponent implements OnInit {
   public button='save';
   task_IDd: any;
   taskList: any;
+  serviceForFilter: any;
+  taskfee1: any;
+  tasName: any;
   
 
 showSuccessMessage() {
@@ -40,8 +43,7 @@ showSuccessMessage() {
     'action',
   
   ];
-  taskfee: any;
-
+  taskfee: any[] = [];
   constructor(
     private _empService: EmployeeService,
     private messageService: MessageService
@@ -70,7 +72,7 @@ showSuccessMessage() {
     this.taskfeeList();
     this.gettaskList();
     this.form.patchValue({
-      id: generateGuid(),
+      // id: generateGuid(),
       task_ID:generateGuid(),
       task_code:generateGuid(),
       created_by: generateGuid(),
@@ -88,16 +90,14 @@ showSuccessMessage() {
 
   gettaskList() {
     this._empService.taskList().subscribe((res:any) => {
-      // console.log('task_ID',res);  
+       console.log('task_ID',res);  
       this.task_ID = res.proctaskss;
-      // console.log('Response:', this.task_ID );
+       console.log('Response:', this.task_ID );
     });
   }
   openEditForm(data: any) {
     this.button='Update'
-    this.service_ID=data
     this.task_ID=data
-    this.taskName=data
     this.form.patchValue(
       {
         service_ID:data.service_ID,
@@ -116,12 +116,17 @@ showSuccessMessage() {
   }  
   openAddForm() {
     this.button = 'Save';
+   
     this.taskName = null; 
   } 
   onServiceIDChange(value: any) {
     this.isDropdownSelected = !!value;
-    
+    this.serviceForFilter=value
     this.passdata(value);
+    console.log('serviceForFilter',value);
+     this.taskfee1=this.taskfee.filter((value:any)=>value.service_ID==this.serviceForFilter)
+        console.log('this.taskfee1',this.taskfee1);
+    
   }
   passdata(data:any){
     console.log('dataa',data);
@@ -133,21 +138,58 @@ showSuccessMessage() {
         
       })
   }
-onFormSubmit() {
-  this._empService.taskfeeadd(this.form.value).subscribe((res)=>{
-    this.taskfeeList();
-    this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Add successfully' });
-  },
-  (error) => {
-    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
+  pasTask(task:any){
+// console.log('taskkkkk',task);
+this.tasName=task
+// this.form.patchValue({
+//   task_ID:task
+// })
   }
-);
-}
+  onFormSubmit() {
+    console.log('taskname',this.form.get('task_Name')?.value);  
+    if (this.taskName == null || this.taskName == undefined) {
+      if (this.form.get('task_Name')?.value != null || this.form.get('task_Name')?.value != undefined) {
+        this._empService.taskfeeadd(this.form.value).subscribe(
+          (res) => {
+            this.taskfeeList();
+            this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Add successfully' });
+            this.resetForm(); 
+          },
+          (error) => {
+            this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
+          }
+        );
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'You have not filled in the task fee' });
+      }
+    } else {
+      this._empService.taskfeeupdate(this.form.value).subscribe(
+        (res) => {
+          this.taskfeeList();
+          this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Updated successfully' });
+          this.resetForm(); 
+        },
+        (error) => {
+          this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
+        }
+      );
+    }
+  }
+  
+  resetForm() {
+    this.form.reset();
+    this.taskName = null;
+  }
+  
+
+  
   taskfeeList() {
     this._empService.taskfeeList().subscribe({
       next: (res) => {
         this.taskfee=res.procTask_Fees
-        console.log('taskfee',res.procTask_Fees);
+        console.log('taskfee',this.taskfee);
+       
+        
       },
       error: console.log,
     });

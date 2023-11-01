@@ -54,10 +54,9 @@
      <form [formGroup]="form">
       
       <div class="mb-3">
-        <label for="serviceide">Service ID</label>
-        <select formControlName="service_ID" class="form-control" id="serviceide">
-          <option *ngFor="let service of service_ID" [value]="service.service_code">{{ service.description_en }}</option>
-        </select>
+       <label for="serviceID">Service ID</label>
+              <input formControlName="service_ID" type="text" class="form-control" id="serviceID" placeholder="Service ID">
+          
       </div>
 
       <div class="mb-3">

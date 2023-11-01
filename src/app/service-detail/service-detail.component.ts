@@ -14,8 +14,14 @@ import { MessageService } from 'primeng/api';
 export class ServiceDetailComponent implements OnInit {
   displayBasic:boolean=false;
   showSuccess: boolean = false;
+  public plan_ID: any;
+  public subCity: any;
+  // public sdpid: any;
   public numServicePerday: any;
   public button='save';
+  annualplan: any;
+  serd: any;
+  serd1: any;
 
 showSuccessMessage() {
   this.showSuccess = true;
@@ -26,10 +32,11 @@ showSuccessMessage() {
 }
   data: any;
   displayedColumns: string[] = [
+    'plan_ID',
     'sdpid',
+    'subCity',
     'num_Service_Per_day',
     'action',
-    // 'dob',
   
   ];
   servicedetail: any;
@@ -42,6 +49,8 @@ showSuccessMessage() {
   form: FormGroup = new FormGroup({
     plan_ID: new FormControl(),
     sdpid: new FormControl(),
+    subCity: new FormControl(),
+    // planID: new FormControl(),
     num_Service_Per_day: new FormControl(),
     accomplished_Services: new FormControl(),
     grand_Plan_Per_Year: new FormControl(),
@@ -83,8 +92,12 @@ showSuccessMessage() {
   })
   ngOnInit(): void {
     this.servicedetailList();
+    this.getSubCities();
+    this.annualplanList();
+    this.servdet();
+    
     this.form.patchValue({
-      sdpid:generateGuid(),
+      // sdpid:generateGuid(),
       plan_ID: generateGuid(),
       created_by: generateGuid(),
       updated_By: generateGuid(),
@@ -92,13 +105,46 @@ showSuccessMessage() {
       is_Deleted:true
     })
   }
+  getSubCities() {
+    this._empService.subCityList().subscribe((res:any) => {
+      this.subCity = res.procorganizationss;
+      console.log('subcityyyy', this.subCity);
+      
+    });
+  }
+  annualplanList() {
+    this._empService.annualplanList().subscribe((res:any) => {
+        this.annualplan=res.procService_Plans
+        console.log('annualplan',res.procService_Plans);
+    });
+  }
+  servdet(){
+    this._empService.servicedetail().subscribe((res:any)=>{
+      this.serd = res
+      console.log('res.View_service_detail_plan',this.serd);
+
+    })
+  }
+  passdata(dataq:any){
+    console.log('passSubcityData',this.serd);
+    this.serd1 = this.serd.filter((data: any)=> data.sdpid == dataq)
+    console.log('data',this.serd1);
+    
+    
+  }
+
+    
   openEditForm(data: any) {
     this.button='Update'
+    this.plan_ID=data
+    this.subCity=data
     this.numServicePerday=data
     this.form.patchValue(
       {
-        plan_ID:data.plan_ID,
-        sdpid: data.sdpid,
+        // plan_ID:data.plan_ID,
+        // sdpid: data.sdpid,
+        plan_ID: data.plan_ID,
+        sdpid:data.subCity,
         num_Service_Per_day: data.num_Service_Per_day,
         accomplished_Services: data.accomplished_Services,
         grand_Plan_Per_Year:data.grand_Plan_Per_Year,
@@ -117,20 +163,19 @@ showSuccessMessage() {
         deleted_Date: data.deleted_Date,
       }
     )
-
   }   
   openAddForm() {
     this.button = 'Save';
-    this.form.reset({
-      plan_ID: randomNumber(1,999)
-    })
+    // this.form.reset({
+    //   plan_ID: generateGuid(),
+    //   sdpid:generateGuid(),
+
+    // })
     this.numServicePerday = null; 
   }
 onFormSubmit() {
-    console.log('customertype',this.form.get('num_Service_Per_day')?.value);
-    if(this.numServicePerday==null||this.numServicePerday==undefined){  
-    if(this.form.get('num_Service_Per_day')?.value!=null||this.form.get('num_Service_Per_day')?.value!=undefined){
-   this._empService.customertypeadd(this.form.value).subscribe((res)=>{
+
+  this._empService.servicedetailadd(this.form.value).subscribe((res)=>{
     this.servicedetailList();
     this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
   },
@@ -138,18 +183,31 @@ onFormSubmit() {
     this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
   }
 );
-   }else{
-     alert('youare not fill service detail');
-   }
-      }else{
-      this._empService.serviceblockupdate(this.form.value).subscribe((res)=>{
-      this.servicedetailList();
-    },
-    (error) => {
-      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
-    }
-  );
-}
+//     console.log('numserviceperday',this.form.get('num_Service_Per_day')?.value);
+//     if(this.numServicePerday==null||this.numServicePerday==undefined){  
+//     if(this.form.get('num_Service_Per_day')?.value!=null||this.form.get('num_Service_Per_day')?.value!=undefined){
+//    this._empService.servicedetailadd(this.form.value).subscribe((res)=>{
+//     this.servicedetailList();
+//     this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Add successfully'});
+//   },
+//   (error) => {
+//     this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
+//   }
+// );
+//    }else{
+//      alert('youare not fill service detail');
+//    }
+//       }else{
+//       this._empService.servicedetailupdate(this.form.value).subscribe((res)=>{
+//       this.servicedetailList();
+//       this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Updated successfully'});
+
+//     },
+//     (error) => {
+//       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
+//     }
+//   );
+// }
 }
 
   servicedetailList() {
@@ -166,7 +224,9 @@ onFormSubmit() {
     const filterValue = (event.target as HTMLInputElement).value;
   }
 
-  servicedetaildelete(id: number) {
+  servicedetaildelete(id: any) {
+    console.log('idddddd',id);
+    
     this._empService.servicedetaildelete(id).subscribe({
       next: (res) => {
         this.servicedetailList();

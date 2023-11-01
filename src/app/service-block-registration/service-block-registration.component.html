@@ -6,13 +6,15 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="serviceID">Service ID</label>
-              <input formControlName="service_ID" type="text" class="form-control" id="serviceID" placeholder="Service ID">
+              <select #serviceidselecter formControlName="service_ID" (change)="subcity()" class="form-control" id="serviceid" >
+                <option *ngFor="let service of service_ID" [value]="service.service_code">{{ service.description_en }}</option>
+              </select>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label for="subcity">Sub City</label>
-              <select formControlName="subCity" class="form-control" id="subcity">
+              <select formControlName="subCity" (change)="woreda()" class="form-control" id="subcity">
                 <option *ngFor="let subcity of subCity" [value]="subcity.sub_City">{{ subcity.name_local}}</option>
               </select>
             </div>
@@ -22,7 +24,7 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="woreda">woreda</label>
-              <select formControlName="woreda_ID" class="form-control" id="woreda">
+              <select formControlName="woreda_ID" class="form-control" [disabled] ="!activeSubcity" id="woreda">
                 <option *ngFor="let woreda of woredaID" [value]="woreda.woreda_ID">{{woreda.woreda_ID}}</option>
               </select>
             </div>

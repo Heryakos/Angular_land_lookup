@@ -15,8 +15,12 @@ export class ServiceBlockRegistrationComponent implements OnInit {
   showSuccess: boolean = false;
   public subCity: any;
   public woredaID: any;
+  public service_ID: any;
   public button='save';
   is_Active = false;
+  activeSubcity: boolean= false;
+  tempsubCity: any;
+  woredaIDD: any;
 
 showSuccessMessage() {
   this.showSuccess = true;
@@ -27,6 +31,7 @@ showSuccessMessage() {
 }
   data: any;
   displayedColumns: string[] = [
+    'service_ID',
     'woreda_ID',
     'subCity',
     'blocked_No',
@@ -96,6 +101,9 @@ showSuccessMessage() {
     this.getWoredas();
     this.getSubCities();
     this.serviceblockList();
+    this.getservicess()
+    this.subcity()
+    this.woreda()
     this.form.patchValue({
       customer_Type_ID: randomNumber(1,999),
       block_ID:generateGuid(),
@@ -108,22 +116,37 @@ showSuccessMessage() {
 
     })
   }
+  getservicess() {
+    this._empService.servicessList().subscribe((res:any) => {
+      this.service_ID = res.procservicess;
+      // console.log('service_ID',this.service_ID);  
+    });
+  }
   getWoredas(){
     this._empService.woredaidList().subscribe((res)=>{
-      this.woredaID=res.procWoreda_Lookups
-      console.log('woredass',this.woredaID);
+      this.woredaIDD=res.procWoreda_Lookups
+      console.log('woredass',this.woredaIDD);
       
     })
   }
+  subcity(){
+    this.activeSubcity=true
+    this.subCity=this.tempsubCity
+  }
+  woreda(){
+    this.woredaID =this.woredaIDD
+    
+  }
    getSubCities() {
     this._empService.subCityList().subscribe((res) => {
-      this.subCity = res.procorganizationss;
+      this.tempsubCity = res.procorganizationss;
       // console.log('logggg',this.subCity);
       
     });
   }
   openEditForm(data: any) {
     this.button='Update'
+    this.service_ID=data
     this.subCity=data
     this.woredaID=data
     this.form.patchValue(

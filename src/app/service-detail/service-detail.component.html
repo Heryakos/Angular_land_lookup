@@ -6,17 +6,34 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="subCity">Sub City</label>
-            <input formControlName="subCity" type="text" class="form-control" id="subCity" placeholder="Sub City">
+            <label for="subcity">Sub City</label>
+            <!-- <select formControlName="subCity" class="form-control" id="subcity" (change)="passSubcityData($event.target.value)">
+              <option *ngFor="let subcity of subCity" [value]="subcity.organization_code">{{ subcity.name_local}}</option>
+            </select> -->
+            <select
+                  class="form-control"
+                  name="subCity"
+                  id="subCity"
+                  #subselecter
+                  formControlName="sdpid"
+                  (change)="passdata(subselecter.value)"
+                  >
+
+                  <ng-container *ngFor="let subcity of subCity">
+                    <option [value]="subcity.organization_code">
+                      {{ subcity.name_local }}
+                    </option>
+                  </ng-container>
+                </select>
           </div>
-      </div>
+        </div>
   </div>
-<p-table [value]="servicedetail" [paginator]="true" [rows]="5" class="custom-table">
+<p-table [value]="serd1" [paginator]="true" [rows]="5" class="custom-table">
     
     <ng-template pTemplate="header">
         <tr>
           <th >
-            ID
+            Service Name
           </th>
           <th >
             Num Service Per day
@@ -31,7 +48,7 @@
     <ng-template pTemplate="body" let-rowData>
         <tr [pSelectableRow]="rowData">
           <td >
-            {{rowData.sdpid}}
+            {{rowData.service_Name}}
          </td>
          <td >
            {{rowData.num_Service_Per_day}}
@@ -40,7 +57,7 @@
                 <button type="button" class="btn btn-primary edit-button"  (click)="openEditForm(rowData);displayBasic=true">
                     <i class="pi pi-pencil"></i>
                 </button>
-                <button type="button" class="btn btn-danger delete-button" (click)="servicedetaildelete(rowData.sdpid)">
+                <button type="button" class="btn btn-danger delete-button" (click)="servicedetaildelete(rowData)">
                     <i class="pi pi-trash"></i> 
                 </button>
             </td>
@@ -50,6 +67,13 @@
 
 <p-dialog header="List Of Users" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000" position="top"> 
      <form [formGroup]="form">
+
+      <div class="form-group">
+        <label for="planid">Plan ID</label>
+        <select formControlName="planID" class="form-control" id="planid">
+          <option *ngFor="let planid of annualplan" [value]="planid.planID">{{ planid.service_Name}}</option>
+        </select>
+      </div>
    
       <label for="recipient-name" class="col-form-label">num_Service_Per_day</label>
       <input type="text" class="form-control" placeholder="num_Service_Per_day" formControlName="num_Service_Per_day" id="recipient-name">
