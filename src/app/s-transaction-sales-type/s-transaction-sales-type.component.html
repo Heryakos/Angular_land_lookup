@@ -1,0 +1,124 @@
+<p-toast
+  position="bottom-right"
+  [showTransformOptions]="'translateX(100%)'"
+></p-toast>
+<p style="background: #84b4f1; color: black">
+  List of S Transaction Sales Type
+</p>
+<p-table
+  [value]="startingno"
+  [paginator]="true"
+  [rows]="5"
+  class="custom-table"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Code</th>
+      <th>Description</th>
+      <th>Starting No</th>
+      <th>Last Date Used</th>
+      <th>sdp</th>
+      <!-- <th>Service Code</th> -->
+      <!-- <th>Ending No</th> -->
+      <th>Last No Used</th>
+      <!-- <th>Default Nos</th> -->
+      <!-- <th>Manual Nos</th> -->
+      <!-- <th>Date Order</th> -->
+      <th>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="openAddForm(); displayBasic = true"
+        >
+          <i class="pi pi-plus"></i> Add New
+        </button>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData>
+    <tr [pSelectableRow]="rowData">
+      <td>{{ rowData.code }}</td>
+      <td>{{ rowData.description }}</td>
+      <td>{{ rowData.starting_No }}</td>
+      <td>{{ rowData.last_Date_Used }}</td>
+      <td>{{ rowData.sdp }}</td>
+      <!-- <td>{{ rowData.service_Code }}</td> -->
+      <!-- <td>{{ rowData.ending_No }}</td> -->
+      <td>{{ rowData.last_No_Used }}</td>
+      <!-- <td>{{ rowData.default_Nos }}</td> -->
+      <!-- <td>{{ rowData.manual_Nos }}</td> -->
+      <!-- <td>{{ rowData.date_Order }}</td> -->
+      <td>
+        <button
+          type="button"
+          class="btn btn-primary edit-button"
+          (click)="openEditForm(rowData); displayBasic = true"
+        >
+          <i class="pi pi-pencil"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger delete-button"
+          (click)="sTransactionSalesTypesdelete(rowData.code)"
+        >
+          <i class="pi pi-trash"></i>
+        </button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog
+  header="List Of Users"
+  [(visible)]="displayBasic"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  position="top"
+>
+  <form [formGroup]="form">
+    <div class="mb-3">
+      <label for="recipient-name" class="col-form-label">Code</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Code"
+        formControlName="code"
+        id="recipient-name"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="recipient-name" class="col-form-label">Description</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Description"
+        formControlName="description"
+        id="recipient-name"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="recipient-name" class="col-form-label">Starting No</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Starting No"
+        formControlName="starting_No"
+        id="recipient-name"
+      />
+    </div>
+  </form>
+
+  <p-footer>
+    <button type="button" (click)="displayBasic = false" class="btn btn-danger">
+      Close
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="displayBasic = false; onFormSubmit()"
+    >
+      {{ button }}
+    </button>
+  </p-footer>
+</p-dialog>

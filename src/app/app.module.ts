@@ -33,6 +33,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
 import {ToastModule} from 'primeng/toast';
+import { STransactionSalesTypeComponent } from './s-transaction-sales-type/s-transaction-sales-type.component';
 @NgModule({
   declarations: [
     
@@ -57,6 +58,7 @@ import {ToastModule} from 'primeng/toast';
     TitleDeedTransferComponent,
     WoredaGroupComponent,
     WoredaListComponent,
+    STransactionSalesTypeComponent,
   ],
   imports: [
     ToastModule,

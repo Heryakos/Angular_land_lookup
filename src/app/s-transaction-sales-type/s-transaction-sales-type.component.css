@@ -1,0 +1,21 @@
+.custom-table {
+  border: none;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.edit-button {
+  margin-right: 10px;
+}
+
+.delete-button {
+  margin-right: 10px;
+}
+@media (max-width: 768px) {
+  .custom-table th,
+  .custom-table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

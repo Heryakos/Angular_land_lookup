@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
     const lookupTables = [
       'customerStatus', 'customerType', 'titleDeedTransfer', 'familyRelationshipType', 'leaseOwnedStatus',
       'leaseType', 'measurementFee', 'plotTypeofUse', 'plotStatus', 'propertyStatus', 'propertyType',
-      'suspensionReason', 'woredasList', 'woredasGroup', 'annualServicePlan', 'serviceDetail',
+      'suspensionReason','sTransactionSalesType', 'woredasList', 'woredasGroup', 'annualServicePlan', 'serviceDetail',
       'serviceFee', 'taskFee', 'country', 'serviceBlockRegistration'
     ];
   

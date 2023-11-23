@@ -18,6 +18,7 @@
         <button type="button" class="btn btn-primary m-2" (click)="showDisplay('propertyStatus')">Property Status</button>
         <button type="button" class="btn btn-primary m-2" (click)="showDisplay('propertyType')">Property Type</button>
         <button type="button" class="btn btn-primary m-2" (click)="showDisplay('suspensionReason')">Suspension Reason</button>
+        <button type="button" class="btn btn-primary m-2" (click)="showDisplay('sTransactionSalesType')">S Transaction Sales Type</button>
         <button type="button" class="btn btn-primary m-2" (click)="showDisplay('woredasList')">Woredas List</button>
         <button type="button" class="btn btn-primary m-2" (click)="showDisplay('woredasGroup')">Woredas Group</button>
         <button type="button" class="btn btn-primary m-2" (click)="showDisplay('annualServicePlan')">Annual Service Plan</button>
@@ -44,6 +45,7 @@
       <app-plot-status *ngIf="displayFlags.plotStatus"></app-plot-status>
       <app-property-status *ngIf="displayFlags.propertyStatus"></app-property-status>
       <app-suspension-reason *ngIf="displayFlags.suspensionReason"></app-suspension-reason>
+      <app-s-transaction-sales-type *ngIf="displayFlags.sTransactionSalesType"></app-s-transaction-sales-type>
       <app-woreda-list *ngIf="displayFlags.woredasList"></app-woreda-list>
       <app-woreda-group *ngIf="displayFlags.woredasGroup"></app-woreda-group>
       <app-annual-service-plan *ngIf="displayFlags.annualServicePlan"></app-annual-service-plan>
