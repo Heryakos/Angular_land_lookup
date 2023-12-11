@@ -431,6 +431,7 @@ export class EmployeeService {
   serviceblockdelete(id: any): Observable<any> {
     return this._http.delete(
       this.serviceblockaddd +
+        '/' +
         id.block_ID +
         '/' +
         id.blocked_No +
