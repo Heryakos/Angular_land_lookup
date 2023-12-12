@@ -1,108 +1,185 @@
-<p style="background: #84b4f1;color: black;">Service Block Registration</p>
+<p style="background: #84b4f1; color: black">Service Block Registration</p>
 <form [formGroup]="form" class="form-container">
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="serviceID">Service ID</label>
-              <select #serviceidselecter formControlName="service_ID" (change)="subcity()" class="form-control" id="serviceid" >
-                <option *ngFor="let service of service_ID" [value]="service.service_code">{{ service.description_en }}</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="subcity">Sub City</label>
-              <select formControlName="subCity" (change)="woreda()" class="form-control" id="subcity">
-                <option *ngFor="let subcity of subCity" [value]="subcity.sub_City">{{ subcity.name_local}}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="woreda">woreda</label>
-              <select formControlName="woreda_ID" class="form-control" [disabled] ="!activeSubcity" id="woreda">
-                <option *ngFor="let woreda of woredaID" [value]="woreda.woreda_ID">{{woreda.woreda_ID}}</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="blockedNo">Block Number</label>
-              <input formControlName="blocked_No" type="text" class="form-control" id="blockedNo" placeholder="Block Number">
-            </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="serviceID">Service ID</label>
+            <select
+              #serviceidselecter
+              formControlName="service_ID"
+              (change)="onServiceIDChange(serviceidselecter.value)"
+              class="form-control"
+              id="serviceid"
+            >
+              <option
+                *ngFor="let service of service_ID"
+                [value]="service.service_code"
+              >
+                {{ service.description_en }}
+              </option>
+            </select>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="activeRemark">Active Remark</label>
-              <textarea formControlName="active_Remark" class="form-control" id="activeRemark" placeholder="Active Remark"></textarea>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="serviceBlockRemark">Service Block Remark</label>
-              <textarea formControlName="deactive_Remark" class="form-control" id="serviceBlockRemark" placeholder="Service Block Remark"></textarea>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="startDate">Start Date</label>
-              <input formControlName="start_Date" type="date" class="form-control" id="startDate">
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="endDate">End Date</label>
-              <input formControlName="end_Date" type="date" class="form-control" id="endDate">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-check">
-              <input formControlName="is_Active" type="checkbox" class="form-check-input" id="isActive">
-              <label class="form-check-label" for="isActive">Is Active</label>
-            </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="subcity">Sub City</label>
+            <select
+              formControlName="subCity"
+              (change)="woreda()"
+              class="form-control"
+              id="subcity"
+            >
+              <option
+                *ngFor="let subcity of subCity"
+                [value]="subcity.sub_City"
+              >
+                {{ subcity.name_local }}
+              </option>
+            </select>
           </div>
         </div>
       </div>
-      <div class="card-footer">
-        <button (click)="save()" class="btn btn-primary">Save</button>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="woreda">woreda</label>
+            <select
+              formControlName="woreda_ID"
+              class="form-control"
+              [disabled]="!activeSubcity"
+              id="woreda"
+            >
+              <option
+                *ngFor="let woreda of woredaID"
+                [value]="woreda.woreda_ID"
+              >
+                {{ woreda.woreda_ID }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="blockedNo">Block Number</label>
+            <input
+              formControlName="blocked_No"
+              type="text"
+              class="form-control"
+              id="blockedNo"
+              placeholder="Block Number"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="activeRemark">Active Remark</label>
+            <textarea
+              formControlName="active_Remark"
+              class="form-control"
+              id="activeRemark"
+              placeholder="Active Remark"
+            ></textarea>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="serviceBlockRemark">Service Block Remark</label>
+            <textarea
+              formControlName="deactive_Remark"
+              class="form-control"
+              id="serviceBlockRemark"
+              placeholder="Service Block Remark"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input
+              formControlName="start_Date"
+              type="date"
+              class="form-control"
+              id="startDate"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input
+              formControlName="end_Date"
+              type="date"
+              class="form-control"
+              id="endDate"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-check">
+            <input
+              formControlName="is_Active"
+              type="checkbox"
+              class="form-check-input"
+              id="isActive"
+            />
+            <label class="form-check-label" for="isActive">Is Active</label>
+          </div>
+        </div>
       </div>
     </div>
-  </form>
+    <div class="card-footer">
+      <button (click)="save()" class="btn btn-primary">Save</button>
+    </div>
+  </div>
+</form>
 
-  <p-table [value]="serviceblock" [paginator]="true" [rows]="5">
-    <ng-template pTemplate="header">
-      <tr>
-        <th>woreda</th>
-        <th>Block Number</th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Active Remark</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-        <tr [class.table-row-hover]="isRowHovered[rowIndex]" (mouseenter)="toggleRowHover(rowIndex)" (mouseleave)="toggleRowHover(rowIndex)">        <td>{{ rowData.woreda_ID }}</td>
-        <td>{{ rowData.blocked_No }}</td>
-        <td>{{ rowData.start_Date }}</td>
-        <td>{{ rowData.end_Date }}</td>
-        <td>{{ rowData.active_Remark }}</td>
-        <td>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter200" (click)="openEditForm(rowData)">
-            <i class="pi pi-pencil"></i>
-          </button>
-          <button type="button" class="btn btn-danger" (click)="serviceblockdelete(rowData)">
-            <i class="pi pi-trash"></i> 
-          </button>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+<p-table [value]="serviceblock2" [paginator]="true" [rows]="5">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>woreda</th>
+      <th>Block Number</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Active Remark</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+    <tr
+      [class.table-row-hover]="isRowHovered[rowIndex]"
+      (mouseenter)="toggleRowHover(rowIndex)"
+      (mouseleave)="toggleRowHover(rowIndex)"
+    >
+      <td>{{ rowData.woreda_ID }}</td>
+      <td>{{ rowData.blocked_No }}</td>
+      <td>{{ rowData.start_Date }}</td>
+      <td>{{ rowData.end_Date }}</td>
+      <td>{{ rowData.active_Remark }}</td>
+      <td>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-toggle="modal"
+          data-target="#exampleModalCenter200"
+          (click)="openEditForm(rowData)"
+        >
+          <i class="pi pi-pencil"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="serviceblockdelete(rowData)"
+        >
+          <i class="pi pi-trash"></i>
+        </button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
