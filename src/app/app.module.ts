@@ -7,9 +7,9 @@ import {DialogModule} from 'primeng/dialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AnnualServicePlanComponent } from './annual-service-plan/annual-service-plan.component';
 import { CustomerTypeComponent } from './customer-type/customer-type.component';
-import { CommonModule } from '@angular/common';
+import { APP_BASE_HREF, CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomerStatusComponent } from './customer-status/customer-status.component';
 import { CountryComponent } from './country/country.component';
@@ -34,6 +34,11 @@ import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
 import {ToastModule} from 'primeng/toast';
 import { STransactionSalesTypeComponent } from './s-transaction-sales-type/s-transaction-sales-type.component';
+import { PropertyUseComponent } from './property-use/property-use.component';
+import { MessageService } from 'primeng/api';
+import { GisMapComponent } from './gis-map/gis-map.component';
+import { LookupComponent } from './lookup/lookup.component';
+import { TreeModule } from 'primeng/tree';
 @NgModule({
   declarations: [
     
@@ -59,11 +64,17 @@ import { STransactionSalesTypeComponent } from './s-transaction-sales-type/s-tra
     WoredaGroupComponent,
     WoredaListComponent,
     STransactionSalesTypeComponent,
+    PropertyUseComponent,
+    GisMapComponent,
+    LookupComponent,
   ],
   imports: [
+    CommonModule,
+    FormsModule,
     ToastModule,
     DialogModule,
     BrowserModule,
+    TreeModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     CommonModule,
@@ -74,7 +85,9 @@ import { STransactionSalesTypeComponent } from './s-transaction-sales-type/s-tra
     CardModule,
     DropdownModule,
   ],
-  providers: [],
+  providers: [{ provide: APP_BASE_HREF, useValue: window["_app_base"] },MessageService],
+  // providers: [MessageService],
   bootstrap: [AppComponent]
+  
 })
 export class AppModule { }
