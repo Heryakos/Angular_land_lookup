@@ -1,77 +1,128 @@
-<p-toast position="bottom-right" [showTransformOptions]="'translateX(100%)'"></p-toast>
-<p style="background: #84b4f1;color: black;">Survey Measurement Fee</p>
+<p-toast
+  position="bottom-right"
+  [showTransformOptions]="'translateX(100%)'"
+></p-toast>
+<p style="background: #84b4f1; color: black">Survey Measurement Fee</p>
 
-<p-table [value]="measurementfee" [paginator]="true" [rows]="5" class="custom-table">
-    
-    <ng-template pTemplate="header">
-        <tr>
-          <th >
-            ID
-          </th>
-          <th >
-            to_M2
-          </th>
-          <th >
-            From M2
-          </th>
-          <th>
-            amount
-          </th>
-          <th >
-            <button type="button" class="btn btn-primary" (click)="openAddForm();displayBasic=true">
-              <i class="pi pi-plus"></i> Add New
-          </button>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData>
-        <tr [pSelectableRow]="rowData">
-          <td>
-            {{rowData.measurement_Fee_ID}}
-          </td>
-          <td>
-            {{rowData.from_M2}}
-          </td>
-            <td >
-               {{rowData.to_M2}}
-            </td>
-            <td >
-              {{rowData.amount}}
-            </td>
-            <td>
-                <button type="button" class="btn btn-primary edit-button"  (click)="openEditForm(rowData);displayBasic=true">
-                    <i class="pi pi-pencil"></i>
-                </button>
-                <button type="button" class="btn btn-danger delete-button" (click)="measurementfeedelete(rowData.measurement_Fee_ID)">
-                    <i class="pi pi-trash"></i> 
-                </button>
-            </td>
-        </tr>
-    </ng-template>
+<p-table
+  [value]="measurementfee"
+  [paginator]="true"
+  [rows]="5"
+  class="custom-table"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>to_M2</th>
+      <th>From M2</th>
+      <th>amount</th>
+      <th>Court Amount</th>
+      <th>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="openAddForm(); displayBasic = true"
+        >
+          <i class="pi pi-plus"></i> Add New
+        </button>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData>
+    <tr [pSelectableRow]="rowData">
+      <td>
+        {{ rowData.measurement_Fee_ID }}
+      </td>
+      <td>
+        {{ rowData.to_M2 }}
+      </td>
+      <td>
+        {{ rowData.from_M2 }}
+      </td>
+      <td>
+        {{ rowData.amount }}
+      </td>
+      <td>{{ rowData.court_Amount }}</td>
+      <td>
+        <button
+          type="button"
+          class="btn btn-primary edit-button"
+          (click)="openEditForm(rowData); displayBasic = true"
+        >
+          <i class="pi pi-pencil"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger delete-button"
+          (click)="measurementfeedelete(rowData.measurement_Fee_ID)"
+        >
+          <i class="pi pi-trash"></i>
+        </button>
+      </td>
+    </tr>
+  </ng-template>
 </p-table>
 
-<p-dialog header="List Of Users" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000" position="top"> 
-     <form [formGroup]="form">
-   
-      <div class="mb-3">
-        <label for="recipient-name" class="col-form-label">From_M2</label>
-        <input type="text" class="form-control" placeholder="from_M2" formControlName="from_M2" id="recipient-name">
-      </div>
-      <div class="mb-3">
-        <label for="recipient-name" class="col-form-label">To M2</label>
-        <input type="text" class="form-control" placeholder="To M2" formControlName="to_M2" id="recipient-name">
-      </div>
-      <div class="mb-3">
-        <label for="recipient-name" class="col-form-label">Amount</label>
-        <input type="text" class="form-control" placeholder="Amount" formControlName="amount" id="recipient-name">
-      </div>
+<p-dialog
+  header="List Of Users"
+  [(visible)]="displayBasic"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  position="top"
+>
+  <form [formGroup]="form">
+    <div class="mb-3">
+      <label for="recipient-name" class="col-form-label">From_M2</label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="from_M2"
+        formControlName="from_M2"
+        id="recipient-name"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="recipient-name" class="col-form-label">To M2</label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="To M2"
+        formControlName="to_M2"
+        id="recipient-name"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="recipient-name" class="col-form-label">Amount</label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Amount"
+        formControlName="amount"
+        id="recipient-name"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="recipient-name" class="col-form-label">Court Amount</label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Court Amount"
+        formControlName="court_Amount"
+        id="recipient-name"
+      />
+    </div>
   </form>
 
-<p-footer>
-  <button type="button"  (click)="displayBasic=false"  class="btn btn-danger">close</button>
-  <button type="button"  class="btn btn-secondary" (click)="displayBasic=false; onFormSubmit();" > {{button}}</button>
-</p-footer>
+  <p-footer>
+    <button type="button" (click)="displayBasic = false" class="btn btn-danger">
+      close
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="displayBasic = false; onFormSubmit()"
+    >
+      {{ button }}
+    </button>
+  </p-footer>
 </p-dialog>
-
-    
-
-
