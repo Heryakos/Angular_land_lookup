@@ -21,13 +21,14 @@ export class EmployeeService {
   private leaseownedstatusaddd =
     environment.rootpathh +
     'Lease_Owned_Status_Lookup/procLease_Owned_Status_Lookup';
+  private proprtyuseddd =
+    environment.rootpathh + 'proc_Proprty_Use/proc_Proprty_Use';
   private leasetypeaddd =
     environment.rootpathh + 'Lease_Type_Lookup/procLease_Type_Lookup';
   private plotstatusaddd =
     environment.rootpathh + 'Plotl_Status_Lookup/procPlotl_Status_Lookup';
-  private plottypeofuseaddd =
-    environment.rootpathh +
-    'Plot_Type_Of_Use_Lookup/procPlot_Type_Of_Use_Lookup';
+  private plottypeofuseaddd =environment.rootpathh +'Plot_Type_Of_Use_Lookup/procPlot_Type_Of_Use_Lookup';
+  private propertyuse =environment.rootpathh +'view/View_propertyUse';
   private familyaddd =
     environment.rootpathh +
     'Family_RelationShip_Type_Lookup/procFamily_RelationShip_Type_Lookup';
@@ -39,6 +40,7 @@ export class EmployeeService {
   private servicedetailaddd =
     environment.rootpathh + 'Service_Detail/procService_Detail';
   private taskfeeaddd = environment.rootpathh + 'Task_Fee/procTask_Fee';
+  private viewtaskfee = environment.rootpathh + 'view/view_Task_Fee';
   private woredagroupaddd =
     environment.rootpathh + 'Woreda_Group/procWoreda_Group';
   private woredaidaddd =
@@ -47,6 +49,7 @@ export class EmployeeService {
     environment.rootpathh + 'Service_Plan/procService_Plan';
   private propertystatusaddd =
     environment.rootpathh + 'Property_StatusLookup/procProperty_StatusLookup';
+
   private propertytypeaddd =
     environment.rootpathh + 'Property_Type_Lookup/procProperty_Type_Lookup';
   private suspensionaddd =
@@ -100,7 +103,9 @@ export class EmployeeService {
   leaseownedstatusadd(data: any): Observable<any> {
     return this._http.post(this.leaseownedstatusaddd, data);
   }
-
+  proprtyusedd(data: any): Observable<any> {
+    return this._http.post(this.proprtyuseddd, data);
+  }
   leasetypeadd(data: any): Observable<any> {
     return this._http.post(this.leasetypeaddd, data);
   }
@@ -188,6 +193,9 @@ export class EmployeeService {
   leaseownedstatusupdate(data: any): Observable<any> {
     return this._http.put(this.leaseownedstatusaddd, data);
   }
+  proprtyuseupdate(data: any): Observable<any> {
+    return this._http.put(this.proprtyuseddd, data);
+  }
 
   leasetypeupdate(data: any): Observable<any> {
     return this._http.put(this.leasetypeaddd, data);
@@ -272,7 +280,9 @@ export class EmployeeService {
   leaseownedstatuslist(): Observable<any> {
     return this._http.get(this.leaseownedstatusaddd);
   }
-
+  proprtyuselist(): Observable<any> {
+    return this._http.get(this.proprtyuseddd);
+  }
   leasetypeupdatelist(): Observable<any> {
     return this._http.get(this.leasetypeaddd);
   }
@@ -291,6 +301,9 @@ export class EmployeeService {
 
   plottypeofuselist(): Observable<any> {
     return this._http.get(this.plottypeofuseaddd);
+  }
+  getpropertyuselist(): Observable<any> {
+    return this._http.get(this.propertyuse);
   }
 
   propertystatuslist(): Observable<any> {
@@ -314,7 +327,7 @@ export class EmployeeService {
   }
 
   taskfeeList(): Observable<any> {
-    return this._http.get(this.taskfeeaddd);
+    return this._http.get(this.viewtaskfee);
   }
 
   servicefeeList(): Observable<any> {
@@ -344,9 +357,13 @@ export class EmployeeService {
   woredaidList(): Observable<any> {
     return this._http.get(this.woredaidaddd);
   }
+  get_by_Id(endPoint1:any,subcityID:any){
+    return this._http.get<any>(`${environment.rootpathh}${endPoint1}/${subcityID}`);
+  }
 
   servicedetail(): Observable<any> {
     return this._http.get(this.servicedetaill);
+    
   }
   subCityList(): Observable<any> {
     return this._http.get(this.subCityListt);
@@ -371,6 +388,9 @@ export class EmployeeService {
   leaseownedstatuslistID(id: any) {
     return this._http.get(this.leaseownedstatusaddd + '/' + id);
   }
+  proprtyusedddlistID(id: any) {
+    return this._http.get(this.proprtyuseddd + '/' + id);
+  }
 
   leasetypeupdatelistID(id: any) {
     return this._http.get(this.leasetypeaddd + '/' + id);
@@ -394,6 +414,9 @@ export class EmployeeService {
 
   leaseownedstatusdelete(id: number): Observable<any> {
     return this._http.delete(this.leaseownedstatusaddd + '/' + id);
+  }
+  proprtyusedelete(id: number): Observable<any> {
+    return this._http.delete(this.proprtyuseddd + '/' + id);
   }
 
   leasetypedelete(id: number): Observable<any> {
