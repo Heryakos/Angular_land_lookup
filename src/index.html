@@ -1,105 +1,42 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Landlookup</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
     (function () {
-        // window['_UserName'] = "@HttpContext.Current.User.Identity.Name";
-      // window["rootPath2"] = "http://197.156.93.110/XOKA.eoffice.bpel_land/api/";
-      window["rootpath6"] ="http://197.156.93.110/XOKA.eoffice.bpel_Land/api/BPEL/";
-      // window["rootPath3"] = "http://197.156.93.110/XOKA.eoffice.bpel_land/api/";
-      // window["formPath"] = "http://land.xokait.com.et/db/";
+
+      window['rootPath'] = 'http://197.156.93.110/XOKA.eoffice.bpel_land/api/';
+      window["rootpath6"] = "http://197.156.93.110/XOKA.eoffice.bpel_Land/api/BPEL/";
       window["rootpathh"] = "http://197.156.93.110/Xoka_land_API/api/";
-    //  window["rootpath4"] ="http://197.156.93.110/XOKA.eoffice.bpel_land/api/BPEL/SaveData";
-     //196.189.44.247
-
-
-      // window["rootPath2"] = "http://efhc.gov.et/xoka.ERP.API/api/";
-      // window["rootPath3"] = "http://efhc.gov.et/xoka.jobapi/api/";
-      // window["formPath"] = "http://efhc.gov.et/xokaerp/db/";
-      //  window['rootPath'] = 'http://197.156.93.110/XOKA.eoffice.bpel_land/api/';
-
-      // window['local_GIS_server'] = './assets/geojson';
-      // window['wfs_geoserver'] = 'http://localhost:8082/geoserver/ows';
-      // window['resourcePath'] = "DesktopModules/MVC/xokamytasks/Views/Item/assets/";
-      // window['overlayLayer'] = "Ethiopia - Admin Level 3.json";
-      // window['layerConfig'] = [
-      //   {
-      //     'name': "Ethiopia - Admin Level 1.json",
-      //     'weight': 5
-      //   }
-      // ];
-      // window['customerRegServices'] = [
-      //   'TNR_SRV_01',
-      //   'TNR_SRV_02',
-      //   'TNR_SRV_03',
-      //   '01_GIS_NAHR'
-      // ];
-      // window['gisRegServices'] = [
-      //   'Ex_L_SRV',
-      //   'RC_SRV',
-      //   'Gll_Geo_SRV',
-      //   'WFD_UL_SRV',
-      //   'DGeo_WP'
-      // ]
-
-      // Tax appeall
-      // window['rootPath'] = 'http://bpel2.ftac.gov.et/XOKA.eoffice.bpel/api/';
-      // window['phisicalPath'] = '/DesktopModules/MVC/MY_APP/Views/Item/assets/assets/i18n/';
-      // window['sitePath'] = '';
-
-      // Job creation
-      // window['rootPath'] = 'http://197.156.93.110/XOKA.eoffice.bpel_Job/api/';
-      // window['phisicalPath'] = '/' + window.location.pathname.split('/')[1] + '/DesktopModules/MVC/XOKA_SW_DNNModuleMYApp/Views/Item/assets/assets/i18n/';
-      // window['sitePath'] = '/xokaswcms2';
-
-      // Federal house
-      //window['rootPath'] = 'http://197.156.93.110/XOKA.eoffice.bpel/api/';
-      // window['phisicalPath'] = '/' + window.location.pathname.split('/')[1] + '/DesktopModules/MVC/XOKA_SW_DNNModuleMYApp/Views/Item/assets/assets/i18n/';
-      // window['sitePath'] = '';
-
-      // Geothermal
-      // window['rootPath'] = 'http://197.156.93.110/XOKA.eoffice.bpel_Energy/api/';
-      // window['phisicalPath'] = '/DesktopModules/MVC/XOKA_SW_DNNModuleMYApp/Views/Item/assets/assets/i18n/';
-      // window['sitePath'] = '';
-
-      // window['lang'] = (window.location.pathname.split('/')[window['sitePath'] != '' ? 2 : 1] ?? 'en-us').toLowerCase();
-
-      // if (window.location.pathname !== '/') {
-      //   if (
-      //     window.location.pathname.split('/')[1] !== 'MyApplication' &&
-      //     window.location.pathname.split('/')[1] !== 'service' &&
-      //     window.location.pathname.split('/')[1] !== 'services'
-      //   ) {
-      //     let urlSegments = window.location.pathname.split('/');
-      //     let siteName = window['sitePath'];
-      //     let isLangPrefix = window['lang'] == 'en-us' || window['lang'] == 'am-et';
-      //     let langPrefix = urlSegments[window['sitePath'] != '' ? 2 : 1];
-      //     let pageName = urlSegments[window['sitePath'] != '' ? (isLangPrefix ? 3 : 2) : (isLangPrefix ? 2 : 1)];
-
-          // window['_app_base'] = ${siteName}/${isLangPrefix ? langPrefix + '/' + pageName : pageName};
-        // }
-      // }
-
-      // if (String(window["lang"]).toLowerCase() === "am-et") {
-      //   document.title = "የእኔ ማመልከቻዎች"
-      // }
-      // else {
-      //   document.title = "My Applications";
-      // }
+      window["rootPathApi"] = "http://197.156.93.110/Xoka_land_API/api/";
+      window["rootPath2"] = "http://197.156.93.110/XOKA.eoffice.bpel_land/api/";
+      window["rootPath3"] = "http://197.156.93.110/Xoka_land_API/api/";
+      window['geoser'] = "http://land.xokait.com.et:8080/geoserver";
+      window['SubcityName'] = window.location.pathname.split("/")[1] + "_AddisLand"
+      window['parentWorkspace'] = "	LookUp_AddisLand"
+      window['Totalareatolerance'] = 0.05;
+      window["iconpath"] = '/DesktopModules/MVC/TASK/Views/Item/assets/assets/marker-icon.png'
+      window['phisicalPath'] = '/DesktopModules/MVC/TASK/Views/Item/assets/assets/i18n/';
     })();
 
-// Ben, [8/24/2023 8:30 PM]
-// setInterval(function () {
-//       $(".blink").fadeToggle();
-//     }, 100);
+    // Ben, [8/24/2023 8:30 PM]
+    // setInterval(function () {
+    //       $(".blink").fadeToggle();
+    //     }, 100);
   </script>
 </head>
+
 <body>
   <app-root></app-root>
 </body>
+
 </html>
