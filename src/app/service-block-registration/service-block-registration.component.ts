@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../employee.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-
+import { ServiceService } from '../service.service';
 @Component({
   selector: 'app-service-block-registration',
   templateUrl: './service-block-registration.component.html',
@@ -14,14 +14,17 @@ export class ServiceBlockRegistrationComponent implements OnInit {
   showSuccess: boolean = false;
   public subCity: any;
   public woredaID: any;
-  public service_ID: any;
   public button = 'save';
+  public service_ID: any;
   is_Active = false;
   activeSubcity: boolean = false;
   tempsubCity: any;
   woredaIDD: any;
   serviceForFilter: any;
   serviceblock2: any;
+  isEditing: boolean = false;
+  editable: boolean = false;
+  endPoint2: string = "Woreda_Lookup/procWoreda_Lookup";
 
   showSuccessMessage() {
     this.showSuccess = true;
@@ -38,6 +41,7 @@ export class ServiceBlockRegistrationComponent implements OnInit {
     'start_Date',
     'end_Date',
     'active_Remark',
+    'deactive_Remark',
     'action',
   ];
   serviceblock: any;
@@ -47,7 +51,8 @@ export class ServiceBlockRegistrationComponent implements OnInit {
   }
   constructor(
     private _empService: EmployeeService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private ServiceService : ServiceService
   ) {}
 
   saveForm() {
@@ -65,53 +70,23 @@ export class ServiceBlockRegistrationComponent implements OnInit {
     end_Date: new FormControl(),
     is_Active: new FormControl(),
     active_Remark: new FormControl(),
+    Geo: new FormControl(),
     deactive_Remark: new FormControl(),
     created_By: new FormControl(),
     updated_By: new FormControl(),
     deleted_By: new FormControl(),
-    created_Date: new FormControl(new Date().toISOString().substr(0, 10)),
-    updated_Date: new FormControl(new Date().toISOString().substr(0, 10)),
+    created_Date: new FormControl(),
+    updated_Date: new FormControl(),
     deleted_Date: new FormControl(new Date().toISOString().substr(0, 10)),
-    is_Deleted: new FormControl(new Date().toISOString().substr(0, 10)),
-    // created_Date: new FormControl(new Date().toISOString().substr(0, 10)),
-    // licence_type: new FormControl(),
-    // file_no: new FormControl(),
-    // site_ID: new FormControl(),
-    // mineral_ID: new FormControl(),
-    // trade_Nname: new FormControl(),
-    // renwal_date: new FormControl(new Date().toISOString().substr(0, 10)),
-    // licence_fee: new FormControl(),
-    // cadastral_fee: new FormControl(),
-    // status_of_License: new FormControl(),
-    // tin_Certificate: new FormControl(),
-    //   application:new FormControl(),
-    //   feasibility: new FormControl(),
-    //   agreement:new FormControl(),
-    //   certificate: new FormControl(),
-    //   map: new FormControl(),
-    //   work_program: new FormControl(),
-    // license_code: new FormControl(),
-    // coordinate: new FormControl(),
-    // selct_mineral: new FormControl(),
-    // select_site: new FormControl(),
+    is_Deleted: new FormControl(),
   });
   ngOnInit(): void {
-    this.getWoredas();
+    // this.getWoredas();
     this.getSubCities();
     this.serviceblockList();
     this.getservicess();
     this.subcity();
-    this.woreda();
-    this.form.patchValue({
-      customer_Type_ID: randomNumber(1, 999),
-      block_ID: generateGuid(),
-      sdP_ID: generateGuid(),
-      service_ID: generateGuid(),
-      created_by: generateGuid(),
-      updated_By: generateGuid(),
-      deleted_By: generateGuid(),
-      is_Deleted: true,
-    });
+    // this.woreda();
   }
   getservicess() {
     this._empService.servicessList().subscribe((res: any) => {
@@ -130,19 +105,28 @@ export class ServiceBlockRegistrationComponent implements OnInit {
         (value: any) => value.service_ID == this.serviceForFilter
       );
       console.log('this.taskfee1', this.serviceblock2);
-    }, 1000);
+    }, 2000);
   }
-  getWoredas() {
-    this._empService.woredaidList().subscribe((res) => {
-      this.woredaIDD = res.procWoreda_Lookups;
+  getWoredas(event:any) {
+    // debugger
+    console.log("woreda",event.target.value);
+    this._empService.get_by_Id(this.endPoint2, event.target.value).subscribe((res) => {
+      debugger
+    this.woredaID = res.procWoreda_Lookups;
       console.log('woredass', this.woredaIDD);
     });
+    // this._empService.woredaidList().subscribe((res) => {
+    //   this.woredaIDD = res.procWoreda_Lookups;
+    //   console.log('woredass', this.woredaIDD);
+    // });
   }
   subcity() {
     this.activeSubcity = true;
     //this.subCity = this.tempsubCity;
   }
-  woreda() {
+  woreda(evet:any) {
+    console.log("woreda",evet.target.value);
+    
     this.woredaID = this.woredaIDD;
   }
   getSubCities() {
@@ -151,22 +135,23 @@ export class ServiceBlockRegistrationComponent implements OnInit {
       // console.log('logggg',this.subCity);
     });
   }
+
   openEditForm(data: any) {
-    this.button = 'Update';
-    this.service_ID = data;
-    this.subCity = data;
-    this.woredaID = data;
+    console.log('datatatatata', data);
+
+    this.isEditing = false;
+    this.editable = true;
     this.form.patchValue({
       block_ID: data.block_ID,
       service_ID: data.service_ID,
       sdP_ID: data.sdP_ID,
-      subCity: data.subCity,
       woreda_ID: data.woreda_ID,
       blocked_No: data.blocked_No,
       start_Date: data.start_Date,
       end_Date: data.end_Date,
       is_Active: data.is_Active,
       active_Remark: data.active_Remark,
+      deactive_Remark: data.deactive_Remark,
       is_Deleted: data.is_Deleted,
       created_Date: data.created_Date,
       updated_Date: data.updated_Date,
@@ -174,9 +159,20 @@ export class ServiceBlockRegistrationComponent implements OnInit {
     });
   }
   save() {
+     this.saveproploc();
+     this.form.patchValue({
+      block_ID: generateGuid(),
+      created_Date: new Date().toISOString().substr(0, 10),
+      is_Deleted: false,
+    });
+     debugger
     this._empService.serviceblockadd(this.form.value).subscribe(
       (res) => {
+        this.onServiceIDChange(this.serviceForFilter);
         this.serviceblockList();
+        this.getservicess();
+        this.form.reset();
+        
         this.messageService.add({
           severity: 'success',
           summary: 'Success Message',
@@ -191,38 +187,179 @@ export class ServiceBlockRegistrationComponent implements OnInit {
         });
       }
     );
-    this.button = 'Save';
+  }
+  saveproploc() {
+    // console.log("propformLocation", this.propformLocation);
+    console.log("coordinatcoordinat", this.ServiceService.coordinate);
+    if (this.ServiceService.coordinate) {
+      // let coordinate= this.convertToMultiPoint(this.serviceService.coordinate)
+      // console.log('coordinatecoordinate',coordinate)
+
+      // let coordinate= this.convertToMultiPoint(this.serviceService.coordinate)
+      // this.propformLocation.geowithzone=coordinate
+
+      // this.ServiceService.getUserRole().subscribe((response: any) => {
+        let coordinates = this.convertToMultiPoints(
+          this.ServiceService.coordinate
+        );
+
+        console.log("coordinatecoordinate", coordinates);
+        
+        this.form.patchValue({
+          Geo : coordinates
+        });
+        let coordinate = this.convertToMultiPoint(
+          this.ServiceService.coordinate
+        );
+        // this.propformLocation.geowithzone = coordinate;
+        // this.propformLocation.geoForwgs84 =
+        //   this.ServiceService.coordinateForwgs84;
+        // console.log("responseresponseresponse", response, response[0].RoleId);
+        // this.propformLocation.proporty_Id =
+        //   this.ServiceService.insertedProperty;
+        // this.propformLocation.created_By = response[0].RoleId;
+        // this.propformLocation.created_Date = new Date();
+
+        // this.ServiceService.saveProploc(this.propformLocation).subscribe(
+        //   (CustID) => {
+        //     //this.getproploc(this.propformLocation.proporty_Id);
+        //     const toast = this.notificationsService.success(
+        //       "Sucess",
+        //       "Succesfully saved"
+        //     );
+        //     this.getproplocbyid(this.propertyRegister.plot_ID);
+        //     // this.ServiceService.hide = false;
+        //   },
+        //   (error) => {
+        //     console.log("error");
+        //     const toast = this.notificationsService.error(
+        //       "error",
+        //       `unable to Save ${
+        //         error["status"] == 0
+        //           ? error["message"]
+        //           : JSON.stringify(JSON.stringify(error["error"]))
+        //       }`
+        //     );
+        //   }
+        // );
+      // });
+    }
+  }
+  convertToMultiPoints(
+    points: { easting: number; northing: number }[]
+  ): string {
+    const multiPointArray = points
+      .map((point) => `${point.easting} ${point.northing}`)
+      .join(", ");
+
+    if (this.ServiceService.iscircleLatLngs == 0) {
+      const multiPointString = `POLYGON((${multiPointArray}))/0`;
+
+      return multiPointString;
+    } else {
+      const multiPointCircle = this.ServiceService.centerLatLng
+        .map((point) => `${point.easting} ${point.northing}`)
+        .join(", ");
+
+      const multiPoint = `POINT(${multiPointCircle})/${Math.trunc(
+        this.ServiceService.iscircleLatLngs
+      )}`;
+      return multiPoint;
+    }
+  }
+  convertToMultiPoint(
+    points: {
+      easting: number;
+      northing: number;
+      hemisphere: string;
+      zone: number;
+    }[]
+  ): string {
+    const multiPointArray = points
+      .map(
+        (point) =>
+          `${point.easting} ${point.northing} ${point.hemisphere} ${point.zone}`
+      )
+      .join(", ");
+
+    const multiPointString = `POLYGON((${multiPointArray}))`;
+
+    return multiPointString;
+  }
+  
+  // save() {
+  //   this._empService.serviceblockadd(this.form.value).subscribe(
+  //     (res) => {
+  //       this.onServiceIDChange(this.serviceForFilter);
+  //       this.serviceblockList();
+  //       this.getservicess();
+  //       this.form.patchValue({
+  //         customer_Type_ID: randomNumber(1, 999),
+  //         block_ID: generateGuid(),
+  //         sdP_ID: generateGuid(),
+  //         service_ID: generateGuid(),
+  //         created_by: generateGuid(),
+  //         updated_By: generateGuid(),
+  //         deleted_By: generateGuid(),
+  //       });
+  //       this.messageService.add({
+  //         severity: 'success',
+  //         summary: 'Success Message',
+  //         detail: 'Table Add successfully',
+  //       });
+  //     },
+  //     (error) => {
+  //       this.messageService.add({
+  //         severity: 'error',
+  //         summary: 'Error Message',
+  //         detail: 'Failed to add table',
+  //       });
+  //     }
+  //   );
+  //   this.button = 'Save';
+  //   this.form.reset({
+  //     customer_Type_ID: randomNumber(1, 999),
+  //     block_ID: generateGuid(),
+  //     sdP_ID: generateGuid(),
+  //     service_ID: generateGuid(),
+  //     created_by: generateGuid(),
+  //     updated_By: generateGuid(),
+  //     deleted_By: generateGuid(),
+  //   });
+  //   this.woredaID = null;
+  // }
+  update() {
+    // debugger
+    this._empService.serviceblockupdate(this.form.value).subscribe(
+      (res) => {
+        this.onServiceIDChange(this.serviceForFilter);
+        this.serviceblockList();
+        this.getservicess();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success Message',
+          detail: 'Table updated successfully',
+        });
+      },
+      (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error Message',
+          detail: 'Failed to update table',
+        });
+      }
+    );
     this.form.reset({
       customer_Type_ID: randomNumber(1, 999),
     });
     this.woredaID = null;
   }
-  // onFormSubmit() {
-  //     console.log('woredaid',this.form.get('woreda_ID')?.value);
-  //     if(this.woredaID==null||this.woredaID==undefined){
-  //     if(this.form.get('woreda_ID')?.value!=null||this.form.get('woreda_ID')?.value!=undefined){
-  //    this._empService.serviceblockadd(this.form.value).subscribe((res)=>{
-  //     this.serviceblockList();
-  //     this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Add successfully' });
-  //   },
-  //   (error) => {
-  //     this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to add table' });
-  //   }
-  // );
-  //       }else{
-  //         alert('youare not fill service block registration');
-  //       }
-  //       }else{
-  //       this._empService.serviceblockupdate(this.form.value).subscribe((res)=>{
-  //       this.serviceblockList();
-  //     },
-  //     (error) => {
-  //       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to update table' });
-  //     }
-  //   );
-  // }
-  // }
-
+  cancel() {
+    this.isEditing = false;
+    this.editable = false
+    this.form.reset();
+    this.woredaID = null;
+  }
   serviceblockList() {
     this._empService.serviceblockList().subscribe({
       next: (res) => {
@@ -240,7 +377,9 @@ export class ServiceBlockRegistrationComponent implements OnInit {
   serviceblockdelete(id: number) {
     this._empService.serviceblockdelete(id).subscribe({
       next: (res) => {
+        this.onServiceIDChange(this.serviceForFilter);
         this.serviceblockList();
+        this.getservicess();
         this.messageService.add({
           severity: 'success',
           summary: 'Success Message',
