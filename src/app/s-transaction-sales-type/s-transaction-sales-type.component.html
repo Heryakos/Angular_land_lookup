@@ -105,6 +105,42 @@
         placeholder="Starting No"
         formControlName="starting_No"
         id="recipient-name"
+        inputmode="numeric"
+        pattern="[0-9]*"
+      />
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="startDate">last Date Used</label>
+        <input
+          formControlName="last_Date_Used"
+          type="date"
+          class="form-control"
+          id="last_Date_Used"
+        />
+      </div>
+    </div>
+    <!-- <div class="mb-3">
+      <label for="sdp" class="col-form-label">sdp</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="sdp"
+        formControlName="sdp"
+        id="sdp"
+        [disabled]="isInputDisabled"
+      />
+    </div> -->
+    <div class="mb-3">
+      <label for="recipient-name" class="col-form-label">Last No Used</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Last No Used"
+        formControlName="last_No_Used"
+        id="recipient-name"
+        inputmode="numeric"
+        pattern="[0-9]*"
       />
     </div>
   </form>

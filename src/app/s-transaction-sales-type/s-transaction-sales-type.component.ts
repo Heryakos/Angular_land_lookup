@@ -106,6 +106,7 @@ export class STransactionSalesTypeComponent implements OnInit {
   openAddForm() {
     this.button = 'Save';
     this.form.reset({
+      code: randomNumber(1, 999),
       starting_No: randomNumber(1, 999),
     });
     this.startingNo = null;
