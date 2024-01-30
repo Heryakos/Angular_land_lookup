@@ -70,7 +70,7 @@
 
       <div class="form-group">
         <label for="planid">Plan ID</label>
-        <select formControlName="planID" class="form-control" id="planid">
+        <select formControlName="plan_ID" class="form-control" id="planid">
           <option *ngFor="let planid of annualplan" [value]="planid.planID">{{ planid.service_Name}}</option>
         </select>
       </div>
@@ -82,7 +82,7 @@
 
 <p-footer>
   <button type="button"  (click)="displayBasic=false"  class="btn btn-danger">close</button>
-  <button type="button"  class="btn btn-secondary" (click)="displayBasic=false; onFormSubmit();" > {{button}}</button>
+  <button type="button" class="btn btn-secondary" (click)="button === 'Update' ? update() : onFormSubmit(); displayBasic = false;">{{ button }}</button>
 </p-footer>
 </p-dialog>
 

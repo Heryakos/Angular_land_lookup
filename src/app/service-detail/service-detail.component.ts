@@ -22,6 +22,7 @@ export class ServiceDetailComponent implements OnInit {
   annualplan: any;
   serd: any;
   serd1: any;
+  selectedsdpid: any;
 
 showSuccessMessage() {
   this.showSuccess = true;
@@ -124,27 +125,37 @@ showSuccessMessage() {
       console.log('res.View_service_detail_plan',this.serd);
 
     })
-  }
+  };
+  
   passdata(dataq:any){
+    setTimeout(() => {
+    this.selectedsdpid=dataq
+    console.log('selectedsdpid', this.selectedsdpid);
+    
     console.log('passSubcityData',this.serd);
+
     this.serd1 = this.serd.filter((data: any)=> data.sdpid == dataq)
     console.log('data',this.serd1);
-    
+  }, 1000); 
     
   }
 
     
   openEditForm(data: any) {
     this.button='Update'
-    this.plan_ID=data
-    this.subCity=data
-    this.numServicePerday=data
+    //this.plan_ID=data
+    //this.subCity=data
+    //this.numServicePerday=data
+    console.log('Update', data);
+    this.servicedetailList();
+    this.passdata(this.form.get('sdpid')?.value)
+    
     this.form.patchValue(
       {
         // plan_ID:data.plan_ID,
         // sdpid: data.sdpid,
-        plan_ID: data.plan_ID,
-        sdpid:data.subCity,
+        plan_ID: data.planID,
+        sdpid:data.sdpid,
         num_Service_Per_day: data.num_Service_Per_day,
         accomplished_Services: data.accomplished_Services,
         grand_Plan_Per_Year:data.grand_Plan_Per_Year,
@@ -163,7 +174,29 @@ showSuccessMessage() {
         deleted_Date: data.deleted_Date,
       }
     )
-  }   
+  }  
+  update(){
+    
+    this._empService.servicedetailupdate(this.form.value).subscribe((res)=>{
+      this.servdet()
+      this.passdata(this.selectedsdpid);
+      
+console.log('responseerty',res);
+this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Update successfully' });
+// this._empService.servicedetail().subscribe((res:any)=>{
+//   this.serd = res
+//   console.log('res.View_service_detail_plan444',this.serd);
+
+// })
+// this.passdata(this.form.get('sdpid')?.value)
+
+    },
+    (error) => {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to Update table' });
+    }
+    )
+    
+  } 
   openAddForm() {
     this.button = 'Save';
     // this.form.reset({
