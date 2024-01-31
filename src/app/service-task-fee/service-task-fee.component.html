@@ -42,7 +42,7 @@
                 <button type="button" class="btn btn-primary edit-button"  (click)="openEditForm(rowData);displayBasic=true">
                     <i class="pi pi-pencil"></i>
                 </button>
-                <button type="button" class="btn btn-danger delete-button" (click)="servicefeedelete(rowData.service_ID)">
+                <button type="button" class="btn btn-danger delete-button" (click)="servicefeedelete(rowData)">
                     <i class="pi pi-trash"></i> 
                 </button>
             </td>
@@ -53,11 +53,21 @@
 <p-dialog header="List Of Users" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000" position="top"> 
      <form [formGroup]="form">
       
-      <div class="mb-3">
+      <!-- <div class="mb-3">
        <label for="serviceID">Service ID</label>
               <input formControlName="service_ID" type="text" class="form-control" id="serviceID" placeholder="Service ID">
           
-      </div>
+      </div> -->
+      
+      
+        <div class="mb-3">
+          <label for="serviceid">Service ID</label>
+          <select  formControlName="service_ID" class="form-control" id="serviceid" >
+            <option *ngFor="let service of service_ID" [value]="service.service_code">{{ service.description_en }}</option>
+          </select>
+        </div>
+        
+      
 
       <div class="mb-3">
         <label for="recipient-name" class="col-form-label">Service Fee</label>
@@ -75,7 +85,7 @@
 
 <p-footer>
   <button type="button"  (click)="displayBasic=false"  class="btn btn-danger">close</button>
-  <button type="button"  class="btn btn-secondary" (click)="displayBasic=false; onFormSubmit();" > {{button}}</button>
+  <button type="button" class="btn btn-secondary" (click)="button === 'Update' ? update() : onFormSubmit(); displayBasic = false;">{{ button }}</button>
 </p-footer>
 </p-dialog>
 

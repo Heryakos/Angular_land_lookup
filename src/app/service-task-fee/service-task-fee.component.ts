@@ -16,7 +16,7 @@ export class ServiceTaskFeeComponent implements OnInit {
   showSuccess: boolean = false;
   public serviceFee1: any;
   public button='save';
- // public service_ID: any;
+  public service_ID: any;
 
 showSuccessMessage() {
   this.showSuccess = true;
@@ -27,7 +27,7 @@ showSuccessMessage() {
 }
   data: any;
   displayedColumns: string[] = [
-    //'service_ID',
+    'service_ID',
     'service_fee1',
     'assurance',
     'tember',
@@ -79,29 +79,31 @@ showSuccessMessage() {
   })
   ngOnInit(): void {
     this.servicefeeList();
-   // this.getservicess();
+    this.getservicess();
     this.form.patchValue({
-       service_ID: generateGuid(),
+   //    service_ID: generateGuid(),
       created_by: generateGuid(),
       updated_By: generateGuid(),
       deleted_By: generateGuid(),
       is_Deleted:true
     })
   }
-  // getservicess() {
-  //   this._empService.servicessList().subscribe((res:any) => {
-  //     this.service_ID = res.procservicess;
-  //     // console.log('service_ID',this.service_ID);  
-  //   });
-  // }
+  getservicess() {
+    this._empService.servicessList().subscribe((res:any) => {
+      this.service_ID = res.procservicess;
+       console.log('service_ID',this.service_ID);  
+    });
+  }
   openEditForm(data: any) {
     this.button='Update'
-    //this.service_ID=data
+    this.service_ID=data
     this.serviceFee1=data
+    console.log('Update',data)
+    this.getservicess();
     this.form.patchValue(
       {
-        service_ID: data.service_ID,
-        service_fee1: data.service_fee1,
+        service_ID: data.service_code,
+        service_fee1: data.service_Fee,
         assurance: data.assurance,
         tember: data.tember,
         created_by: data.created_by,
@@ -113,6 +115,8 @@ showSuccessMessage() {
         deleted_Date: data.deleted_Date,
       }
     )
+    //console.log('serviceidlogg',this.form.get('service_ID')?.value,data.service_code);
+    
 
   } 
   passdata(value: any) {
@@ -160,13 +164,26 @@ onFormSubmit() {
       error: console.log,
     });
   }
+  update(){
+    this._empService.servicefeeupdate(this.form.value).subscribe((res)=>{
+      this.servicefeeList();
+console.log('responsevnbx',res);
+this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Table Update successfully' });
 
+    },
+    (error) => {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Failed to Update table' });
+    }
+    )
+    
+  }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
   }
 
-  servicefeedelete(id: number) {
-    this._empService.servicefeedelete(id).subscribe({
+  servicefeedelete(id: any) {
+    console.log('iddddd',id);
+    this._empService.servicefeedelete(id.service_code).subscribe({
       next: (res) => {
         this.servicefeeList();
         this.messageService.add({severity:'success', summary: 'Success Message', detail:'Table Deleted Successfully'});
