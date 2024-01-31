@@ -6,7 +6,7 @@
       <div class="row">
         <div class="mb-3">
           <label for="serviceid">Service ID</label>
-          <select #serviceidselecter formControlName="service_ID" class="form-control" id="serviceid" (change)="onServiceIDChange(serviceidselecter.value)">
+          <select #serviceidselecter (change)="passdataForservice_ID(serviceidselecter.value)" formControlName="service_ID" class="form-control" id="serviceid" (change)="onServiceIDChange(serviceidselecter.value)">
             <option *ngFor="let service of service_ID" [value]="service.service_code">{{ service.description_en }}</option>
           </select>
         </div>
@@ -27,7 +27,7 @@
             Task Name
           </th>
           <th >
-            Customer Type
+            Property use
           </th>
           <th >
             Fee
@@ -42,7 +42,7 @@
     <ng-template pTemplate="body" let-rowData>
       <tr [pSelectableRow]="rowData">
         <td >
-            {{rowData.service_ID}}
+            {{rowData.service_name}}
          </td>
          <td >
            {{rowData.task_ID}}
@@ -51,7 +51,10 @@
            {{rowData.task_Name}}
          </td>
          <td >
-           {{rowData.property_Type}}
+          {{rowData.property_name}}
+           <!-- <select  class="form-control"  [(ngModel)]="rowData.property_Type"  >
+            <option *ngFor="let plot of properyuselist" [value]="plot.proprty_Use">{{ plot.name }}</option>
+          </select> -->
          </td>
          <td >
            {{rowData.fee}}
@@ -60,7 +63,7 @@
                 <button type="button" class="btn btn-primary edit-button"  (click)="openEditForm(rowData);displayBasic=true">
                     <i class="pi pi-pencil"></i>
                 </button>
-                <button type="button" class="btn btn-danger delete-button" (click)="taskfeedelete(rowData.id)">
+                <button type="button" class="btn btn-danger delete-button" (click)="taskfeedelete(rowData)">
                     <i class="pi pi-trash"></i> 
                 </button>
             </td>
@@ -82,18 +85,20 @@
         <input type="text" class="form-control" placeholder="Task Name" formControlName="task_Name" id="recipient-name">
       </div>
       <div class="mb-3">
-        <label for="recipient-name" class="col-form-label">Customer Type</label>
-        <input type="number" class="form-control" placeholder="Customer Type" formControlName="property_Type" id="recipient-name">
+        <label for="recipient-name" class="col-form-label">Property use</label>
+        <select #Customer (change)="pasproperty(Customer.value)" formControlName="property_Type" class="form-control" id="recipient-name">
+          <option *ngFor="let plot of properyuselist" [value]="plot.proprty_Use">{{ plot.name }}</option>
+        </select>
       </div>
       <div class="mb-3">
         <label for="recipient-name" class="col-form-label">Fee</label>
-        <input  onkeypress='return event.charCode >= 48 && event.charCode <= 57' type="text" class="form-control" placeholder="Fee" formControlName="fee" id="recipient-name">
+        <input  onkeypress='return event.charCode >= 48 && event.charCode <= 57' type="number" class="form-control" placeholder="Fee" formControlName="fee" id="recipient-name">
       </div>
   </form>
 
 <p-footer>
   <button type="button"  (click)="displayBasic=false"  class="btn btn-danger">close</button>
-  <button type="button"  class="btn btn-secondary" (click)="displayBasic=false; onFormSubmit();" > {{button}}</button>
+  <button type="button" class="btn btn-secondary" (click)="button === 'Update' ? update() : onFormSubmit(); displayBasic = false;">{{ button }}</button>
 </p-footer>
 </p-dialog>
 
