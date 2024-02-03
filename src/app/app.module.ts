@@ -39,6 +39,7 @@ import { MessageService } from 'primeng/api';
 import { GisMapComponent } from './gis-map/gis-map.component';
 import { LookupComponent } from './lookup/lookup.component';
 import { TreeModule } from 'primeng/tree';
+import { ServiceGroupComponent } from './service-group/service-group.component';
 @NgModule({
   declarations: [
     
@@ -67,6 +68,7 @@ import { TreeModule } from 'primeng/tree';
     PropertyUseComponent,
     GisMapComponent,
     LookupComponent,
+    ServiceGroupComponent,
   ],
   imports: [
     CommonModule,
