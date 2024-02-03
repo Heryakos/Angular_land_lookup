@@ -16,6 +16,8 @@ export class EmployeeService {
     environment.rootpathh + 'Customer_Status_Lookup/procCustomer_Status_Lookup';
   private customertypeaddd =
     environment.rootpathh + 'Customer_Type_Lookup/procCustomer_Type_Lookup';
+  private servicegroupddd =
+    environment.rootpathh + 'Service_Group/procService_Group';
   private transfertypeaddd =
     environment.rootpathh + 'Deed_Transfer_Lookup/procDeed_Transfer_Lookup';
   private leaseownedstatusaddd =
@@ -27,8 +29,10 @@ export class EmployeeService {
     environment.rootpathh + 'Lease_Type_Lookup/procLease_Type_Lookup';
   private plotstatusaddd =
     environment.rootpathh + 'Plotl_Status_Lookup/procPlotl_Status_Lookup';
-  private plottypeofuseaddd =environment.rootpathh +'Plot_Type_Of_Use_Lookup/procPlot_Type_Of_Use_Lookup';
-  private propertyuse =environment.rootpathh +'view/View_propertyUse';
+  private plottypeofuseaddd =
+    environment.rootpathh +
+    'Plot_Type_Of_Use_Lookup/procPlot_Type_Of_Use_Lookup';
+  private propertyuse = environment.rootpathh + 'view/View_propertyUse';
   private familyaddd =
     environment.rootpathh +
     'Family_RelationShip_Type_Lookup/procFamily_RelationShip_Type_Lookup';
@@ -41,6 +45,7 @@ export class EmployeeService {
     environment.rootpathh + 'Service_Detail/procService_Detail';
   private taskfeeaddd = environment.rootpathh + 'Task_Fee/procTask_Fee';
   private viewtaskfee = environment.rootpathh + 'view/view_Task_Fee';
+  private viewservicegroup = environment.rootpathh + 'view/view_Service_Group';
   private woredagroupaddd =
     environment.rootpathh + 'Woreda_Group/procWoreda_Group';
   private woredaidaddd =
@@ -57,6 +62,8 @@ export class EmployeeService {
     'Suspension_Reason_Lookup/procSuspension_Reason_Lookup';
   private countryaddd = environment.rootpathh + 'Country/procCountry';
   private servicessListt = environment.rootpathh + 'services/procservices';
+  private grouplookupp =
+    environment.rootpathh + 'Group_Lookup/procGroup_Lookup';
   private taskListt = environment.rootpathh + 'tasks/proctasks';
   private servicedetaill =
     environment.rootpathh + 'view/View_service_detail_plan';
@@ -73,6 +80,9 @@ export class EmployeeService {
     throw new Error('Method not implemented.');
   }
   getservicess() {
+    throw new Error('Method not implemented.');
+  }
+  grouplookuppp() {
     throw new Error('Method not implemented.');
   }
   woredaidlist() {
@@ -94,6 +104,10 @@ export class EmployeeService {
 
   customertypeadd(data: any): Observable<any> {
     return this._http.post(this.customertypeaddd, data);
+  }
+
+  servicegroupadd(data: any): Observable<any> {
+    return this._http.post(this.servicegroupddd, data);
   }
 
   transfertypeadd(data: any): Observable<any> {
@@ -185,7 +199,9 @@ export class EmployeeService {
   customertypeupdate(data: any): Observable<any> {
     return this._http.put(this.customertypeaddd, data);
   }
-
+  servicegroupupdate(data: any): Observable<any> {
+    return this._http.put(this.servicegroupddd, data);
+  }
   transfertypeupdate(data: any): Observable<any> {
     return this._http.put(this.transfertypeaddd, data);
   }
@@ -273,6 +289,10 @@ export class EmployeeService {
     return this._http.get(this.customertypeaddd);
   }
 
+  servicegrouplist(): Observable<any> {
+    return this._http.get(this.servicegroupddd);
+  }
+
   transfertypelist(): Observable<any> {
     return this._http.get(this.transfertypeaddd);
   }
@@ -329,7 +349,9 @@ export class EmployeeService {
   taskfeeList(): Observable<any> {
     return this._http.get(this.viewtaskfee);
   }
-
+  viewservicegroupList(): Observable<any> {
+    return this._http.get(this.viewservicegroup);
+  }
   servicefeeList(): Observable<any> {
     return this._http.get(this.serviceFeeView);
   }
@@ -337,7 +359,9 @@ export class EmployeeService {
   servicessList(): Observable<any> {
     return this._http.get(this.servicessListt);
   }
-
+  grouplookup(): Observable<any> {
+    return this._http.get(this.grouplookupp);
+  }
   taskList(): Observable<any> {
     return this._http.get(this.taskListt);
   }
@@ -357,13 +381,14 @@ export class EmployeeService {
   woredaidList(): Observable<any> {
     return this._http.get(this.woredaidaddd);
   }
-  get_by_Id(endPoint1:any,subcityID:any){
-    return this._http.get<any>(`${environment.rootpathh}${endPoint1}/${subcityID}`);
+  get_by_Id(endPoint1: any, subcityID: any) {
+    return this._http.get<any>(
+      `${environment.rootpathh}${endPoint1}/${subcityID}`
+    );
   }
 
   servicedetail(): Observable<any> {
     return this._http.get(this.servicedetaill);
-    
   }
   subCityList(): Observable<any> {
     return this._http.get(this.subCityListt);
@@ -379,6 +404,10 @@ export class EmployeeService {
 
   customertypeupdatelistID(id: any) {
     return this._http.get(this.customertypeaddd + '/' + id);
+  }
+
+  servicegrouplistID(id: any) {
+    return this._http.get(this.servicegroupddd + '/' + id);
   }
 
   transfertypelistID(id: any) {
@@ -406,6 +435,10 @@ export class EmployeeService {
 
   customertypedelete(id: number): Observable<any> {
     return this._http.delete(this.customertypeaddd + '/' + id);
+  }
+
+  servicegroupdelete(id: number): Observable<any> {
+    return this._http.delete(this.servicegroupddd + '/' + id);
   }
 
   transfertypedelete(id: number): Observable<any> {
@@ -458,8 +491,6 @@ export class EmployeeService {
         id.block_ID +
         '/' +
         id.blocked_No +
-        '/' +
-        id.end_Date +
         '/' +
         id.is_Active +
         '/' +
