@@ -3,11 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-lookup',
   templateUrl: './lookup.component.html',
-  styleUrls: ['./lookup.component.css']
+  styleUrls: ['./lookup.component.css'],
 })
 export class LookupComponent implements OnInit {
-
-  displayFlags: {[key: string]: boolean} = {};
+  displayFlags: { [key: string]: boolean } = {};
 
   constructor() {
     this.initializeDisplayFlags();
@@ -23,12 +22,31 @@ export class LookupComponent implements OnInit {
 
   initializeDisplayFlags() {
     const lookupTables = [
-      'customerStatus', 'customerType', 'titleDeedTransfer', 'familyRelationshipType', 'leaseOwnedStatus',
-      'leaseType', 'measurementFee', 'plotTypeofUse', 'plotStatus', 'propertyStatus', 'propertyType',
-      'suspensionReason','sTransactionSalesType', 'PropertyUse', 'woredasList', 'woredasGroup', 'annualServicePlan', 'serviceDetail',
-      'serviceFee', 'taskFee', 'country', 'serviceBlockRegistration'
+      'customerStatus',
+      'customerType',
+      'titleDeedTransfer',
+      'familyRelationshipType',
+      'leaseOwnedStatus',
+      'leaseType',
+      'measurementFee',
+      'plotTypeofUse',
+      'plotStatus',
+      'propertyStatus',
+      'propertyType',
+      'servicegroup',
+      'suspensionReason',
+      'sTransactionSalesType',
+      'PropertyUse',
+      'woredasList',
+      'woredasGroup',
+      'annualServicePlan',
+      'serviceDetail',
+      'serviceFee',
+      'taskFee',
+      'country',
+      'serviceBlockRegistration',
     ];
-  
+
     for (const table of lookupTables) {
       this.displayFlags[table] = table === 'customerStatus';
     }
@@ -42,5 +60,4 @@ export class LookupComponent implements OnInit {
     // Store the active button in local storage
     localStorage.setItem('activeButton', property);
   }
-
 }
