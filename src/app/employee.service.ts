@@ -437,10 +437,6 @@ export class EmployeeService {
     return this._http.delete(this.customertypeaddd + '/' + id);
   }
 
-  servicegroupdelete(id: number): Observable<any> {
-    return this._http.delete(this.servicegroupddd + '/' + id);
-  }
-
   transfertypedelete(id: number): Observable<any> {
     return this._http.delete(this.transfertypeaddd + '/' + id);
   }
@@ -483,7 +479,11 @@ export class EmployeeService {
   sTransactionSalesTypesdelete(code: number): Observable<any> {
     return this._http.delete(this.sTransactionSalesTypes + '/' + code);
   }
-
+  servicegroupdelete(id: any): Observable<any> {
+    return this._http.delete(
+      this.servicegroupddd + '/' + id.group_ID + '/' + id.service_Code
+    );
+  }
   serviceblockdelete(id: any): Observable<any> {
     return this._http.delete(
       this.serviceblockaddd +
