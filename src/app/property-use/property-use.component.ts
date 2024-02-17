@@ -22,24 +22,31 @@ export class PropertyUseComponent implements OnInit {
     }, 3000);
   }
   data: any;
-  displayedColumns: string[] = ['name', 'code', 'isActive', 'action'];
+  displayedColumns: string[] = [
+    'name',
+    'code',
+    'isActive',
+    'pay_For_Survey',
+    'action',
+  ];
 
   public proprtyuse: any;
 
   constructor(
-    private _empService: EmployeeService,  
+    private _empService: EmployeeService,
     private messageService: MessageService
-  )
-  {}
+  ) {}
   form: FormGroup = new FormGroup({
     name: new FormControl(),
     code: new FormControl(),
     isActive: new FormControl(),
+    pay_For_Survey: new FormControl(),
   });
   ngOnInit(): void {
     this.proprtyuselist();
     this.form.patchValue({
       isActive: true,
+      pay_For_Survey: true,
     });
   }
   openEditForm(data: any) {
@@ -49,6 +56,7 @@ export class PropertyUseComponent implements OnInit {
       name: data.name,
       code: data.code,
       isActive: data.isActive,
+      pay_For_Survey: data.pay_For_Survey,
     });
   }
   openAddForm() {

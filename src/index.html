@@ -1,42 +1,51 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Landlookup</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css"
+    />
+    <link
+      rel="stylesheet"
+      href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+      (function () {
+        window["rootPath"] =
+          "http://197.156.93.110/XOKA.eoffice.bpel_land/api/";
+        window["rootpath6"] =
+          "http://197.156.93.110/XOKA.eoffice.bpel_Land/api/BPEL/";
+        window["rootpathh"] = "http://197.156.93.110/Xoka_land_API/api/";
+        window["rootPathApi"] = "http://197.156.93.110/Xoka_land_API/api/";
+        window["rootPath2"] =
+          "http://197.156.93.110/XOKA.eoffice.bpel_land/api/";
+        window["rootPath3"] = "http://197.156.93.110/Xoka_land_API/api/";
+        window["geoser"] = "http://land.xokait.com.et:8080/geoserver";
+        window["SubcityName"] =
+          window.location.pathname.split("/")[1] + "_AddisLand";
+        window["parentWorkspace"] = "	LookUp_AddisLand";
+        window["Totalareatolerance"] = 0.05;
+        window["iconpath"] =
+          "/DesktopModules/MVC/TASK/Views/Item/assets/assets/marker-icon.png";
+        window["phisicalPath"] =
+          "/DesktopModules/MVC/TASK/Views/Item/assets/assets/i18n/";
+      })();
 
-<head>
-  <meta charset="utf-8">
-  <title>Landlookup</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script>
-    (function () {
+      // Ben, [8/24/2023 8:30 PM]
+      // setInterval(function () {
+      //       $(".blink").fadeToggle();
+      //     }, 100);
+    </script>
+  </head>
 
-      window['rootPath'] = 'http://197.156.93.110/XOKA.eoffice.bpel_land/api/';
-      window["rootpath6"] = "http://197.156.93.110/XOKA.eoffice.bpel_Land/api/BPEL/";
-      window["rootpathh"] = "http://197.156.93.110/Xoka_land_API/api/";
-      window["rootPathApi"] = "http://197.156.93.110/Xoka_land_API/api/";
-      window["rootPath2"] = "http://197.156.93.110/XOKA.eoffice.bpel_land/api/";
-      window["rootPath3"] = "http://197.156.93.110/Xoka_land_API/api/";
-      window['geoser'] = "http://land.xokait.com.et:8080/geoserver";
-      window['SubcityName'] = window.location.pathname.split("/")[1] + "_AddisLand"
-      window['parentWorkspace'] = "	LookUp_AddisLand"
-      window['Totalareatolerance'] = 0.05;
-      window["iconpath"] = '/DesktopModules/MVC/TASK/Views/Item/assets/assets/marker-icon.png'
-      window['phisicalPath'] = '/DesktopModules/MVC/TASK/Views/Item/assets/assets/i18n/';
-    })();
-
-    // Ben, [8/24/2023 8:30 PM]
-    // setInterval(function () {
-    //       $(".blink").fadeToggle();
-    //     }, 100);
-  </script>
-</head>
-
-<body>
-  <app-root></app-root>
-</body>
-
+  <body>
+    <app-root></app-root>
+  </body>
 </html>
